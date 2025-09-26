@@ -1,0 +1,9 @@
+[build]
+
+Dossier où Netlify trouvera vos fonctions serverless (le proxy)
+functions = "netlify/functions"
+
+[dev]
+
+Permet de tester les fonctions localement si vous le souhaitez
+functions = "netlify/functions"
