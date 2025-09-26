@@ -1,12 +1,12 @@
 {
-  "name": "mon-projet-netlify",
+  "name": "gemini-netlify-proxy",
   "version": "1.0.0",
-  "description": "Mon projet web avec fonctions Netlify.",
+  "description": "Proxy function for accessing the Gemini API securely.",
+  "main": "functions/gemini-proxy.js",
   "scripts": {
-    "start": "echo 'Utilisez npm run build ou démarrez votre serveur ici'"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "@google/genai": "^0.1.0"
-    // Ajoutez ici toutes les autres dépendances de votre projet
   }
 }
