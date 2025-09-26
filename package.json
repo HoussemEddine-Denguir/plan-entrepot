@@ -1,0 +1,12 @@
+{
+  "name": "mon-projet-netlify",
+  "version": "1.0.0",
+  "description": "Mon projet web avec fonctions Netlify.",
+  "scripts": {
+    "start": "echo 'Utilisez npm run build ou démarrez votre serveur ici'"
+  },
+  "dependencies": {
+    "@google/genai": "^0.1.0"
+    // Ajoutez ici toutes les autres dépendances de votre projet
+  }
+}
