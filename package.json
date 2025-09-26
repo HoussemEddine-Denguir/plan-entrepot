@@ -1,9 +1,0 @@
-{
-  "name": "plan-entrepot-proxy",
-  "version": "1.0.0",
-  "description": "Configuration des dépendances pour la fonction Netlify du proxy Gemini.",
-  "dependencies": {},
-  "devDependencies": {
-    "raw-loader": "^4.0.2"
-  }
-}
