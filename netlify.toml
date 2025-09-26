@@ -1,5 +1,21 @@
 [build]
-functions = "netlify/functions"
+  # Déclare l'emplacement de vos fonctions
+  functions = "netlify/functions"
 
-[dev]
-functions = "netlify/functions"
+[functions]
+  # Déclare l'emplacement où Netlify doit chercher le package.json pour les fonctions
+  # (Il cherche à la racine du projet par défaut, mais ceci renforce la configuration)
+  node_bundler = "zip"
+```eof
+
+### 3. Étapes de Correction (Récapitulatif)
+
+Pour garantir que le module est bien trouvé, effectuez ces étapes et poussez les modifications sur GitHub :
+
+1.  **Confirmez le `package.json` :** Assurez-vous que le fichier **`package.json`** à la racine de votre projet contient bien la dépendance `"@google/genai": "^0.1.0"`.
+2.  **Ajoutez `netlify.toml` :** Assurez-vous que votre fichier **`netlify.toml`** (à la racine) contient la configuration ci-dessus.
+3.  **Poussez les changements :** Commitez et poussez les deux fichiers vers GitHub.
+
+Dès que Netlify commence un **nouveau déploiement**, il devrait correctement identifier le dossier de fonction, installer le module `@google/genai`, et cette fois, votre fonction démarrera sans l'erreur `Runtime.ImportModuleError`.
+
+Une fois le déploiement terminé, **testez à nouveau** votre application pour confirmer que le contenu IA est généré. Si l'erreur subsiste après ces étapes, cela signifierait que votre clé `GEMINI_API_KEY` est incorrecte ou manquante dans Netlify, mais l'erreur de module sera résolue.
