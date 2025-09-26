@@ -1,12 +1,7 @@
 {
   "name": "gemini-netlify-proxy",
-  "version": "1.0.0",
-  "description": "Proxy function for accessing the Gemini API securely.",
-  "main": "functions/gemini-proxy.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  // ... autres champs ...
   "dependencies": {
-    "@google/genai": "^0.1.3"
+    "@google/genai": "^0.2.0"
   }
 }
