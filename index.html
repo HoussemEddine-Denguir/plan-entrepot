@@ -1,16 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Warehouse Restructuring Plan</title>
+    <title>Plan de Restructuration d'Entrepôt Interactif</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Calm Neutral Harmony -->
-    <!-- Application Structure Plan: A tabbed, multi-section single-page application. The structure follows the report's three phases (As-Is, To-Be, Implementation) to provide a clear, step-by-step user journey. This design was chosen to break down the dense process into manageable, interactive sections, making it easier for a user to digest and navigate than a simple long-scroll page. Key interactions include tab-based content switching, expandable cards for detailed techniques, and interactive charts to visualize abstract concepts like workload and KPIs. -->
-    <!-- Visualization & Content Choices: The application uses a mix of interactive text blocks and data visualizations to achieve its goals. Key choices include: 1) Report Info: Project Phases -> Goal: Organize/Inform -> Viz: Tabbed Navigation -> Interaction: Click to switch content -> Justification: Structures the user journey logically. 2) Report Info: BA Techniques -> Goal: Inform -> Viz: Expandable Cards -> Interaction: Click to reveal details -> Justification: Reduces initial cognitive load, allowing users to drill down. 3) Report Info: Workload Analysis -> Goal: Compare -> Viz: Bar Chart (Chart.js) -> Interaction: Hover tooltips -> Justification: Makes the abstract concept of workload distribution tangible. 4) Report Info: KPIs -> Goal: Change/Monitor -> Viz: Doughnut/Line Charts (Chart.js) -> Interaction: Hover tooltips -> Justification: Simulates a performance dashboard, making the monitoring phase more concrete. 5) Report Info: New Gemini API Features -> Goal: Assist/Generate -> Viz: Input forms with buttons and output text areas -> Interaction: User input triggers API call to generate relevant content. -> Justification: Provides a practical example of how AI can assist with core business analysis tasks, making the plan more actionable and dynamic. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -85,42 +81,45 @@
 
     <div class="min-h-screen container mx-auto p-4 sm:p-6 lg:p-8">
         <header class="text-center mb-8 md:mb-12">
-            <h1 class="text-3xl md:text-4xl font-bold text-slate-800">Warehouse Restructuring Plan</h1>
-            <p class="mt-2 text-lg text-slate-600">An interactive guide to reimagining your warehouse operations.</p>
+            <h1 class="text-3xl md:text-4xl font-bold text-slate-800">Plan de Restructuration d'Entrepôt Interactif</h1>
+            <p class="mt-2 text-lg text-slate-600">Un guide structuré pour la réorganisation de vos opérations d'entrepôt.</p>
+             <p class="mt-4 text-sm font-medium text-red-600 border border-red-300 bg-red-50 p-3 rounded-lg">
+                Les appels API sont maintenant sécurisés via un proxy backend Netlify. **Vous devez déployer le fichier <code>gemini-proxy.js</code>** séparément pour que les fonctionnalités d'IA fonctionnent.
+            </p>
         </header>
 
         <nav class="mb-8">
             <div class="flex flex-col sm:flex-row justify-center border-b border-slate-300">
                 <button data-target="intro" class="tab-btn active text-slate-600 font-semibold py-3 px-6 border-b-2 border-transparent hover:bg-slate-100">Introduction</button>
-                <button data-target="phase1" class="tab-btn text-slate-600 font-semibold py-3 px-6 border-b-2 border-transparent hover:bg-slate-100">Phase 1: As-Is</button>
-                <button data-target="phase2" class="tab-btn text-slate-600 font-semibold py-3 px-6 border-b-2 border-transparent hover:bg-slate-100">Phase 2: To-Be</button>
-                <button data-target="phase3" class="tab-btn text-slate-600 font-semibold py-3 px-6 border-b-2 border-transparent hover:bg-slate-100">Phase 3: Implementation</button>
+                <button data-target="phase1" class="tab-btn text-slate-600 font-semibold py-3 px-6 border-b-2 border-transparent hover:bg-slate-100">Phase 1: État Actuel</button>
+                <button data-target="phase2" class="tab-btn text-slate-600 font-semibold py-3 px-6 border-b-2 border-transparent hover:bg-slate-100">Phase 2: État Futur</button>
+                <button data-target="phase3" class="tab-btn text-slate-600 font-semibold py-3 px-6 border-b-2 border-transparent hover:bg-slate-100">Phase 3: Implémentation</button>
             </div>
         </nav>
 
         <main>
             <section id="intro" class="content-section active p-4 md:p-6 bg-white rounded-lg shadow-sm">
-                <h2 class="text-2xl font-bold mb-4 text-slate-700">Project Goal & Introduction</h2>
+                <h2 class="text-2xl font-bold mb-4 text-slate-700">Objectif du Projet et Introduction</h2>
                 <p class="text-slate-600 leading-relaxed">
-                    Welcome to the interactive guide for restructuring your inventory and warehouse management teams. The primary objective of this project is to reimagine how processes and roles are distributed to optimize efficiency and accountability across your facilities. This application will walk you through a structured, three-phase business analysis plan. Use the tabs above to navigate between the different phases of the project, from understanding your current state to implementing and monitoring a new, improved system.
+                    Bienvenue dans le guide interactif pour la restructuration de vos équipes de gestion des stocks et d'entrepôt. L'objectif principal est de repenser la distribution des processus et des rôles pour optimiser l'efficacité et la responsabilisation à travers vos installations. Cette application vous guide à travers un plan d'analyse d'affaires structuré en trois phases.
                 </p>
                 <div class="mt-8">
-                    <h3 class="text-xl font-semibold mb-4 text-slate-700">Warehouse Overview</h3>
+                    <h3 class="text-xl font-semibold mb-4 text-slate-700">Aperçu des Entrepôts</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="warehouse-diagram-box">
-                            <h4 class="font-bold text-lg">Warehouse 1</h4>
-                            <p class="text-slate-500">Raw Materials</p>
+                            <h4 class="font-bold text-lg">Entrepôt 1</h4>
+                            <p class="text-slate-500">Matières Premières</p>
                             <div class="mt-4 space-y-2">
-                                <span class="inline-block bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full">Kitchen Accessories</span>
-                                <span class="inline-block bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full">MDF Panels</span>
+                                <span class="inline-block bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full">Accessoires de Cuisine</span>
+                                <span class="inline-block bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full">Panneaux MDF</span>
                             </div>
                         </div>
                         <div class="warehouse-diagram-box">
-                            <h4 class="font-bold text-lg">Warehouse 2</h4>
-                            <p class="text-slate-500">Appliances & Finished Goods</p>
+                            <h4 class="font-bold text-lg">Entrepôt 2</h4>
+                            <p class="text-slate-500">Appareils & Produits Finis</p>
                             <div class="mt-4 space-y-2">
-                                <span class="inline-block bg-purple-100 text-purple-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full">Kitchen Appliances</span>
-                                <span class="inline-block bg-yellow-100 text-yellow-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full">Final Produced Product</span>
+                                <span class="inline-block bg-purple-100 text-purple-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full">Appareils de Cuisine</span>
+                                <span class="inline-block bg-yellow-100 text-yellow-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full">Produit Final</span>
                             </div>
                         </div>
                     </div>
@@ -128,28 +127,28 @@
             </section>
 
             <section id="phase1" class="content-section p-4 md:p-6 bg-white rounded-lg shadow-sm">
-                <h2 class="text-2xl font-bold mb-2 text-slate-700">Phase 1: Current State Analysis (As-Is)</h2>
-                <p class="mb-6 text-slate-600">Before designing the future, you must deeply understand the present. This phase focuses on mapping existing processes, identifying pain points, and documenting current roles to establish a clear baseline for improvement.</p>
+                <h2 class="text-2xl font-bold mb-2 text-slate-700">Phase 1: Analyse de l'État Actuel (As-Is)</h2>
+                <p class="mb-6 text-slate-600">Comprendre le présent est crucial. Cette phase se concentre sur la cartographie des processus existants, l'identification des points de douleur et la documentation des rôles actuels.</p>
                 <div class="grid md:grid-cols-3 gap-6">
                     <div class="technique-card bg-slate-50 p-6 rounded-lg border border-slate-200">
-                        <h3 class="font-bold text-lg mb-2 text-blue-700">Process Mapping</h3>
-                        <p class="text-slate-600">Create visual diagrams of your current inbound and outbound workflows. This helps identify who does what, what inputs are needed, and what outputs are produced at each step.</p>
+                        <h3 class="font-bold text-lg mb-2 text-blue-700">Cartographie des Processus</h3>
+                        <p class="text-slate-600">Créez des diagrammes des flux de travail entrants et sortants pour identifier les étapes et les responsabilités.</p>
                     </div>
                     <div class="technique-card bg-slate-50 p-6 rounded-lg border border-slate-200">
-                        <h3 class="font-bold text-lg mb-2 text-blue-700">Stakeholder Interviews</h3>
-                        <p class="text-slate-600">Conduct interviews with key team members (managers, clerks, leads). This provides invaluable qualitative insight into daily tasks, challenges, and potential improvements.</p>
+                        <h3 class="font-bold text-lg mb-2 text-blue-700">Entretiens avec les Parties Prenantes</h3>
+                        <p class="text-slate-600">Menez des entretiens pour obtenir des informations qualitatives précieuses sur les tâches quotidiennes et les défis.</p>
                     </div>
                     <div class="technique-card bg-slate-50 p-6 rounded-lg border border-slate-200">
-                        <h3 class="font-bold text-lg mb-2 text-blue-700">Document Analysis</h3>
-                        <p class="text-slate-600">Review existing documentation like role descriptions, training manuals, and Standard Operating Procedures (SOPs) to understand the formally defined processes and roles.</p>
+                        <h3 class="font-bold text-lg mb-2 text-blue-700">Analyse Documentaire</h3>
+                        <p class="text-slate-600">Examinez les descriptions de rôle et les Procédures Opérationnelles Standard (POS) pour comprendre les processus formellement définis.</p>
                     </div>
                 </div>
                 <div class="mt-8 p-6 bg-slate-50 rounded-lg border border-slate-200">
-                    <h3 class="font-bold text-lg mb-2 text-slate-700">✨ Interview Question Assistant</h3>
-                    <p class="text-slate-600 text-sm mb-4">Get a list of sample questions for a specific role to help with your interviews.</p>
-                    <textarea id="interview-role-input" class="w-full h-24 p-2 mb-4 rounded-lg border border-slate-300 text-sm" placeholder="e.g., Warehouse Clerk or Inventory Manager"></textarea>
+                    <h3 class="font-bold text-lg mb-2 text-slate-700">✨ Assistant de Questions d'Entrevue</h3>
+                    <p class="text-slate-600 text-sm mb-4">Obtenez une liste d'exemples de questions pour un rôle spécifique afin de faciliter vos entretiens.</p>
+                    <textarea id="interview-role-input" class="w-full h-24 p-2 mb-4 rounded-lg border border-slate-300 text-sm" placeholder="Ex: Commis d'Entrepôt ou Gestionnaire d'Inventaire"></textarea>
                     <button id="generate-questions-btn" class="flex items-center justify-center w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
-                        Generate Questions ✨
+                        Générer les Questions ✨
                         <div id="questions-loading" class="loading-spinner ml-2"></div>
                     </button>
                     <div id="questions-output" class="mt-4 p-4 bg-white rounded-lg border border-slate-200 text-sm whitespace-pre-wrap leading-relaxed"></div>
@@ -157,69 +156,69 @@
             </section>
 
             <section id="phase2" class="content-section p-4 md:p-6 bg-white rounded-lg shadow-sm">
-                <h2 class="text-2xl font-bold mb-2 text-slate-700">Phase 2: Future State Definition (To-Be)</h2>
-                <p class="mb-6 text-slate-600">Using insights from the 'As-Is' analysis, this phase focuses on designing the new, optimized structure. Here you will define clear roles and responsibilities to streamline operations and create a model for the future.</p>
+                <h2 class="text-2xl font-bold mb-2 text-slate-700">Phase 2: Définition de l'État Futur (To-Be)</h2>
+                <p class="mb-6 text-slate-600">Cette phase se concentre sur la conception de la nouvelle structure optimisée, en définissant des rôles et des responsabilités claires pour rationaliser les opérations.</p>
                 <div class="grid lg:grid-cols-2 gap-8">
                     <div>
-                        <h3 class="text-xl font-semibold mb-4 text-slate-700">Key Modeling Techniques</h3>
+                        <h3 class="text-xl font-semibold mb-4 text-slate-700">Techniques de Modélisation Clés</h3>
                         <div class="space-y-4">
                             <div class="technique-card bg-slate-50 p-4 rounded-lg border border-slate-200">
-                                <h4 class="font-bold text-md text-blue-700">Requirements Workshops</h4>
-                                <p class="text-slate-600 text-sm">Bring stakeholders together to brainstorm and agree on core functions, required skills, and how to best leverage the two-warehouse setup.</p>
+                                <h4 class="font-bold text-md text-blue-700">Ateliers d'Exigences</h4>
+                                <p class="text-slate-600 text-sm">Réunir les parties prenantes pour convenir des fonctions de base et des compétences requises.</p>
                             </div>
                             <div class="technique-card bg-slate-50 p-4 rounded-lg border border-slate-200">
-                                <h4 class="font-bold text-md text-blue-700">Role Definition</h4>
-                                <p class="text-slate-600 text-sm">Define new roles needed for future processes. For each, document its purpose, responsibilities, and necessary competencies.</p>
+                                <h4 class="font-bold text-md text-blue-700">Définition des Rôles</h4>
+                                <p class="text-slate-600 text-sm">Définir les nouveaux rôles et documenter leur objectif, leurs responsabilités et les compétences nécessaires.</p>
                             </div>
                             <div class="technique-card bg-slate-50 p-4 rounded-lg border border-slate-200">
-                                <h4 class="font-bold text-md text-blue-700">Workload Analysis</h4>
-                                <p class="text-slate-600 text-sm">Estimate the volume of activities for each new role to ensure work is distributed balancedly. The chart shows a sample analysis.</p>
+                                <h4 class="font-bold text-md text-blue-700">Analyse de la Charge de Travail</h4>
+                                <p class="text-slate-600 text-sm">Estimer le volume d'activités pour chaque nouveau rôle pour garantir une répartition équilibrée du travail.</p>
                             </div>
                         </div>
                          <div class="mt-6">
-                            <h3 class="text-xl font-semibold mb-4 text-slate-700">Example: Workload Analysis</h3>
+                            <h3 class="text-xl font-semibold mb-4 text-slate-700">Exemple: Analyse de la Charge de Travail</h3>
                             <div class="chart-container h-64 md:h-72">
                                 <canvas id="workloadChart"></canvas>
                             </div>
                         </div>
                     </div>
                     <div>
-                        <h3 class="text-xl font-semibold mb-4 text-slate-700">Interactive RACI Matrix Example</h3>
-                        <p class="text-slate-500 mb-4 text-sm">Hover over a task or role to highlight responsibilities. This matrix clarifies who is Responsible, Accountable, Consulted, and Informed for key tasks.</p>
+                        <h3 class="text-xl font-semibold mb-4 text-slate-700">Exemple de Matrice RACI Interactive</h3>
+                        <p class="text-slate-500 mb-4 text-sm">Passez la souris sur une tâche ou un rôle pour mettre en évidence les responsabilités (Responsable, Responsable en Chef, Consulté, Informé).</p>
                         <div class="overflow-x-auto">
                             <table class="raci-table w-full text-left border-collapse">
                                 <thead>
                                     <tr>
-                                        <th class="p-3 font-semibold uppercase bg-slate-100 border border-slate-300">Process / Task</th>
-                                        <th class="p-3 font-semibold uppercase bg-slate-100 border border-slate-300">Inbound Specialist</th>
-                                        <th class="p-3 font-semibold uppercase bg-slate-100 border border-slate-300">Dispatch Coordinator</th>
-                                        <th class="p-3 font-semibold uppercase bg-slate-100 border border-slate-300">Warehouse Manager</th>
+                                        <th class="p-3 font-semibold uppercase bg-slate-100 border border-slate-300">Processus / Tâche</th>
+                                        <th class="p-3 font-semibold uppercase bg-slate-100 border border-slate-300">Spécialiste Entrée</th>
+                                        <th class="p-3 font-semibold uppercase bg-slate-100 border border-slate-300">Coordinateur Expédition</th>
+                                        <th class="p-3 font-semibold uppercase bg-slate-100 border border-slate-300">Gestionnaire Entrepôt</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="hover:bg-slate-50">
-                                        <td class="p-3 font-semibold border border-slate-200">Goods Receipt (MDF)</td>
-                                        <td class="p-3 border border-slate-200">Responsible</td>
-                                        <td class="p-3 border border-slate-200">Informed</td>
-                                        <td class="p-3 border border-slate-200">Accountable, Consulted</td>
+                                        <td class="p-3 font-semibold border border-slate-200">Réception (MDF)</td>
+                                        <td class="p-3 border border-slate-200">R</td>
+                                        <td class="p-3 border border-slate-200">I</td>
+                                        <td class="p-3 border border-slate-200">A, C</td>
                                     </tr>
                                     <tr class="hover:bg-slate-50">
-                                        <td class="p-3 font-semibold border border-slate-200">Inventory Count</td>
-                                        <td class="p-3 border border-slate-200">Responsible</td>
-                                        <td class="p-3 border border-slate-200">Consulted</td>
-                                        <td class="p-3 border border-slate-200">Accountable</td>
+                                        <td class="p-3 font-semibold border border-slate-200">Comptage Inventaire</td>
+                                        <td class="p-3 border border-slate-200">R</td>
+                                        <td class="p-3 border border-slate-200">C</td>
+                                        <td class="p-3 border border-slate-200">A</td>
                                     </tr>
                                     <tr class="hover:bg-slate-50">
-                                        <td class="p-3 font-semibold border border-slate-200">Order Picking (Products)</td>
-                                        <td class="p-3 border border-slate-200">Informed</td>
-                                        <td class="p-3 border border-slate-200">Responsible</td>
-                                        <td class="p-3 border border-slate-200">Accountable, Consulted</td>
+                                        <td class="p-3 font-semibold border border-slate-200">Préparation Commandes</td>
+                                        <td class="p-3 border border-slate-200">I</td>
+                                        <td class="p-3 border border-slate-200">R</td>
+                                        <td class="p-3 border border-slate-200">A, C</td>
                                     </tr>
                                     <tr class="hover:bg-slate-50">
-                                        <td class="p-3 border border-slate-200">Quality Control</td>
-                                        <td class="p-3 border border-slate-200">Responsible</td>
-                                        <td class="p-3 border border-slate-200">Responsible</td>
-                                        <td class="p-3 border border-slate-200">Accountable</td>
+                                        <td class="p-3 border border-slate-200">Contrôle Qualité</td>
+                                        <td class="p-3 border border-slate-200">R</td>
+                                        <td class="p-3 border border-slate-200">R</td>
+                                        <td class="p-3 border border-slate-200">A</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -227,11 +226,11 @@
                     </div>
                 </div>
                 <div class="mt-8 p-6 bg-slate-50 rounded-lg border border-slate-200">
-                    <h3 class="font-bold text-lg mb-2 text-slate-700">✨ Role Description Assistant</h3>
-                    <p class="text-slate-600 text-sm mb-4">Input a new role title and a few key responsibilities to generate a full role description.</p>
-                    <textarea id="role-desc-input" class="w-full h-24 p-2 mb-4 rounded-lg border border-slate-300 text-sm" placeholder="e.g., Inbound Logistics Manager, overseeing inventory and staff."></textarea>
+                    <h3 class="font-bold text-lg mb-2 text-slate-700">✨ Assistant de Description de Rôle</h3>
+                    <p class="text-slate-600 text-sm mb-4">Entrez un nouveau titre de rôle et quelques responsabilités clés pour générer une description complète.</p>
+                    <textarea id="role-desc-input" class="w-full h-24 p-2 mb-4 rounded-lg border border-slate-300 text-sm" placeholder="Ex: Gestionnaire Logistique d'Entrée, supervise l'inventaire et le personnel."></textarea>
                     <button id="generate-role-desc-btn" class="flex items-center justify-center w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
-                        Generate Role Description ✨
+                        Générer la Description de Rôle ✨
                         <div id="role-desc-loading" class="loading-spinner ml-2"></div>
                     </button>
                     <div id="role-desc-output" class="mt-4 p-4 bg-white rounded-lg border border-slate-200 text-sm whitespace-pre-wrap leading-relaxed"></div>
@@ -239,34 +238,34 @@
             </section>
 
             <section id="phase3" class="content-section p-4 md:p-6 bg-white rounded-lg shadow-sm">
-                <h2 class="text-2xl font-bold mb-2 text-slate-700">Phase 3: Implementation & Monitoring</h2>
-                <p class="mb-6 text-slate-600">With the future state defined, this final phase focuses on managing the transition smoothly and establishing metrics to track success. A well-executed plan ensures the new structure is adopted effectively and delivers the desired results.</p>
+                <h2 class="text-2xl font-bold mb-2 text-slate-700">Phase 3: Implémentation et Suivi</h2>
+                <p class="mb-6 text-slate-600">Cette phase se concentre sur la gestion de la transition et l'établissement de métriques pour suivre le succès. Un plan bien exécuté assure l'adoption de la nouvelle structure.</p>
                 <div class="grid lg:grid-cols-2 gap-8 items-start">
                      <div>
-                        <h3 class="text-xl font-semibold mb-4 text-slate-700">Implementation Techniques</h3>
+                        <h3 class="text-xl font-semibold mb-4 text-slate-700">Techniques d'Implémentation</h3>
                         <div class="space-y-4">
                            <div class="technique-card bg-slate-50 p-6 rounded-lg border border-slate-200">
-                                <h3 class="font-bold text-lg mb-2 text-blue-700">Communication Plan</h3>
-                                <p class="text-slate-600">Develop a clear strategy to communicate changes to all team members, explaining the rationale, benefits, and timelines to ensure buy-in and reduce uncertainty.</p>
+                                <h3 class="font-bold text-lg mb-2 text-blue-700">Plan de Communication</h3>
+                                <p class="text-slate-600">Élaborez une stratégie claire pour communiquer les changements à tous les membres de l'équipe, en expliquant la raison d'être, les avantages et les délais.</p>
                             </div>
                             <div class="technique-card bg-slate-50 p-6 rounded-lg border border-slate-200">
-                                <h3 class="font-bold text-lg mb-2 text-blue-700">Training Plan</h3>
-                                <p class="text-slate-600">Create and deliver training sessions to equip team members with the necessary skills and knowledge for their new or revised roles.</p>
+                                <h3 class="font-bold text-lg mb-2 text-blue-700">Plan de Formation</h3>
+                                <p class="text-slate-600">Créez et offrez des sessions de formation pour doter les membres de l'équipe des compétences nécessaires pour leurs nouveaux rôles.</p>
                             </div>
                         </div>
                     </div>
                     <div>
-                         <h3 class="text-xl font-semibold mb-4 text-slate-700">Performance Metrics Dashboard</h3>
-                         <p class="text-slate-500 mb-4 text-sm">Establish Key Performance Indicators (KPIs) to measure the success of the restructuring. This sample dashboard shows critical metrics to monitor.</p>
+                         <h3 class="text-xl font-semibold mb-4 text-slate-700">Tableau de Bord des Métriques</h3>
+                         <p class="text-slate-500 mb-4 text-sm">Établissez des indicateurs clés de performance (KPI) pour mesurer le succès. Ce tableau de bord montre des métriques cruciales à surveiller.</p>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 text-center">
-                                <h4 class="font-semibold text-slate-700">Inventory Accuracy</h4>
+                                <h4 class="font-semibold text-slate-700">Précision de l'Inventaire</h4>
                                 <div class="chart-container h-48 sm:h-56">
                                     <canvas id="accuracyChart"></canvas>
                                 </div>
                             </div>
                              <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 text-center">
-                                <h4 class="font-semibold text-slate-700">Order Cycle Time (Days)</h4>
+                                <h4 class="font-semibold text-slate-700">Temps de Cycle (Jours)</h4>
                                 <div class="chart-container h-48 sm:h-56">
                                     <canvas id="cycleTimeChart"></canvas>
                                 </div>
@@ -275,11 +274,11 @@
                     </div>
                 </div>
                 <div class="mt-8 p-6 bg-slate-50 rounded-lg border border-slate-200">
-                    <h3 class="font-bold text-lg mb-2 text-slate-700">✨ Communication Assistant</h3>
-                    <p class="text-slate-600 text-sm mb-4">Draft a clear and professional message to announce changes to the team.</p>
-                    <textarea id="comm-plan-input" class="w-full h-24 p-2 mb-4 rounded-lg border border-slate-300 text-sm" placeholder="e.g., Explain the new roles and how it improves efficiency. Target audience: All warehouse staff."></textarea>
+                    <h3 class="font-bold text-lg mb-2 text-slate-700">✨ Assistant de Communication</h3>
+                    <p class="text-slate-600 text-sm mb-4">Rédigez un message professionnel pour annoncer les changements à l'équipe.</p>
+                    <textarea id="comm-plan-input" class="w-full h-24 p-2 mb-4 rounded-lg border border-slate-300 text-sm" placeholder="Ex: Expliquer les nouveaux rôles et comment cela améliore l'efficacité. Public cible: Tout le personnel de l'entrepôt."></textarea>
                     <button id="generate-comm-plan-btn" class="flex items-center justify-center w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
-                        Draft Communication Plan ✨
+                        Rédiger le Plan de Communication ✨
                         <div id="comm-plan-loading" class="loading-spinner ml-2"></div>
                     </button>
                     <div id="comm-plan-output" class="mt-4 p-4 bg-white rounded-lg border border-slate-200 text-sm whitespace-pre-wrap leading-relaxed"></div>
@@ -292,8 +291,8 @@
         document.addEventListener('DOMContentLoaded', function () {
             const tabs = document.querySelectorAll('.tab-btn');
             const contentSections = document.querySelectorAll('.content-section');
-            const apiKey = "";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            // Le frontend appelle le point de terminaison relatif qui est géré par la fonction backend sécurisée
+            const PROXY_ENDPOINT = '/api/gemini-proxy'; 
 
             const interviewRoleInput = document.getElementById('interview-role-input');
             const generateQuestionsBtn = document.getElementById('generate-questions-btn');
@@ -348,7 +347,8 @@
                     });
                 });
             }
-
+            
+            // Configuration des options des graphiques
             const chartOptions = {
                 responsive: true,
                 maintainAspectRatio: false,
@@ -391,14 +391,15 @@
                 }
             };
 
+            // Graphique de Charge de Travail
             const workloadCtx = document.getElementById('workloadChart');
             if (workloadCtx) {
                 new Chart(workloadCtx, {
                     type: 'bar',
                     data: {
-                        labels: ['Inbound Specialist', 'Dispatch Coordinator', 'Warehouse Manager'],
+                        labels: ['Spécialiste Entrée', 'Coordinateur Expédition', 'Gestionnaire Entrepôt'],
                         datasets: [{
-                            label: 'Estimated Weekly Hours',
+                            label: 'Heures Hebdomadaires Estimées',
                             data: [38, 40, 35],
                             backgroundColor: ['#60a5fa', '#34d399', '#facc15'],
                             borderColor: ['#3b82f6', '#10b981', '#f59e0b'],
@@ -409,14 +410,15 @@
                 });
             }
 
+            // Graphique de Précision de l'Inventaire
             const accuracyCtx = document.getElementById('accuracyChart');
             if (accuracyCtx) {
                 new Chart(accuracyCtx, {
                     type: 'doughnut',
                     data: {
-                        labels: ['Accurate', 'Error'],
+                        labels: ['Précis', 'Erreur'],
                         datasets: [{
-                            label: 'Inventory Accuracy',
+                            label: 'Précision de l\'Inventaire',
                             data: [98.5, 1.5],
                             backgroundColor: ['#34d399', '#f87171'],
                             hoverOffset: 4
@@ -441,14 +443,15 @@
                 });
             }
 
+            // Graphique du Temps de Cycle
             const cycleTimeCtx = document.getElementById('cycleTimeChart');
             if (cycleTimeCtx) {
                  new Chart(cycleTimeCtx, {
                     type: 'line',
                     data: {
-                        labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+                        labels: ['T1', 'T2', 'T3', 'T4'],
                         datasets: [{
-                            label: 'Order Cycle Time',
+                            label: 'Temps de Cycle de Commande',
                             data: [2.5, 2.2, 1.9, 1.8],
                             fill: false,
                             borderColor: '#3b82f6',
@@ -466,41 +469,50 @@
                          scales: {
                             y: {
                                 beginAtZero: false,
-                                title: { display: true, text: 'Days' }
+                                title: { display: true, text: 'Jours' }
                             }
                          }
                     }
                 });
             }
 
-            const callApi = async (prompt, outputElement, loadingElement, systemInstruction) => {
+
+            // --- FONCTION D'APPEL API MISE À JOUR (Appel du Proxy) ---
+            const callApi = async (userPrompt, outputElement, loadingElement, systemPrompt) => {
                 showLoading(loadingElement);
-                outputElement.textContent = '';
+                outputElement.textContent = 'Génération de contenu...';
                 let retries = 3;
                 while (retries > 0) {
                     try {
-                        const payload = {
-                            contents: [{ parts: [{ text: prompt }] }],
-                            systemInstruction: { parts: [{ text: systemInstruction }] },
-                        };
-                        const response = await fetch(apiUrl, {
+                        // Le payload envoie les invites à notre proxy sécurisé
+                        const payload = { userPrompt, systemPrompt };
+                        
+                        const response = await fetch(PROXY_ENDPOINT, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify(payload)
                         });
+
                         if (!response.ok) {
-                             throw new Error(`API call failed with status: ${response.status}`);
+                             // Gérer l'erreur du proxy
+                            const errorData = await response.json();
+                            throw new Error(`Erreur du proxy: ${response.status} - ${errorData.error || 'Erreur inconnue'}`);
                         }
+                        
                         const result = await response.json();
-                        const generatedText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                        const generatedText = result.text; // Attente de { text: "..." } du proxy
+                        
                         if (generatedText) {
                             outputElement.textContent = generatedText;
                             break;
+                        } else {
+                             throw new Error('Réponse vide reçue du proxy.');
                         }
                     } catch (error) {
+                        console.error("Erreur d'appel API:", error);
                         retries--;
                         if (retries === 0) {
-                           outputElement.textContent = 'Failed to generate content. Please try again later.';
+                           outputElement.textContent = 'Échec de la génération de contenu. Vérifiez la console pour les erreurs de déploiement du proxy.';
                         } else {
                             await new Promise(res => setTimeout(res, 1000 * (4 - retries)));
                         }
@@ -509,40 +521,41 @@
                 hideLoading(loadingElement);
             };
 
+            // --- Écouteurs d'événements (Utilisation de la nouvelle fonction callApi) ---
+
             generateQuestionsBtn.addEventListener('click', () => {
                 const role = interviewRoleInput.value.trim();
                 if (role) {
-                    const systemPrompt = "You are an expert business analyst and human resources consultant. Your task is to generate relevant and insightful interview questions for a warehouse and inventory management restructuring project.";
-                    const userPrompt = `Generate a list of interview questions for a stakeholder with the role of "${role}". The questions should help understand their current responsibilities, challenges, and ideas for a new organizational structure. Present the questions as a numbered list.`;
+                    const systemPrompt = "Vous êtes un expert en analyse commerciale et consultant en ressources humaines. Votre tâche est de générer des questions d'entrevue pertinentes pour un projet de restructuration de la gestion d'entrepôt et d'inventaire.";
+                    const userPrompt = `Générez une liste de questions d'entrevue pour une partie prenante ayant le rôle de "${role}". Les questions doivent aider à comprendre leurs responsabilités actuelles, leurs défis et leurs idées pour une nouvelle structure organisationnelle. Présentez les questions sous forme de liste numérotée.`;
                     callApi(userPrompt, questionsOutput, questionsLoading, systemPrompt);
                 } else {
-                    questionsOutput.textContent = 'Please enter a role to generate questions.';
+                    questionsOutput.textContent = 'Veuillez entrer un rôle pour générer les questions.';
                 }
             });
 
             generateRoleDescBtn.addEventListener('click', () => {
                 const roleDescription = roleDescInput.value.trim();
                 if (roleDescription) {
-                    const systemPrompt = "You are an expert in organizational design and HR. Your task is to write a detailed and professional role description for a warehouse management position.";
-                    const userPrompt = `Draft a comprehensive role description based on the following: "${roleDescription}". Include sections for a summary, key responsibilities, required qualifications, and reporting structure.`;
+                    const systemPrompt = "Vous êtes un expert en conception organisationnelle et RH. Votre tâche est de rédiger une description de rôle détaillée et professionnelle pour un poste de gestion d'entrepôt.";
+                    const userPrompt = `Rédigez une description de rôle complète basée sur les éléments suivants : "${roleDescription}". Incluez des sections pour un résumé, les responsabilités clés, les qualifications requises et la structure hiérarchique.`;
                     callApi(userPrompt, roleDescOutput, roleDescLoading, systemPrompt);
                 } else {
-                    roleDescOutput.textContent = 'Please enter a role description to generate a document.';
+                    roleDescOutput.textContent = 'Veuillez entrer une description de rôle pour générer un document.';
                 }
             });
 
             generateCommPlanBtn.addEventListener('click', () => {
                 const commPlanDetails = commPlanInput.value.trim();
                 if (commPlanDetails) {
-                    const systemPrompt = "You are an expert corporate communications professional. Your task is to draft a clear and empathetic internal memo to employees regarding an organizational change.";
-                    const userPrompt = `Draft a communication message to the team about a restructuring. The message should be based on the following details: "${commPlanDetails}". The tone should be professional, reassuring, and clear about the benefits of the change.`;
+                    const systemPrompt = "Vous êtes un professionnel expérimenté en communication d'entreprise. Votre tâche est de rédiger une note de service interne claire et empathique aux employés concernant un changement organisationnel.";
+                    const userPrompt = `Rédigez un message de communication à l'équipe concernant une restructuration. Le message doit être basé sur les détails suivants : "${commPlanDetails}". Le ton doit être professionnel, rassurant et clair sur les avantages du changement.`;
                     callApi(userPrompt, commPlanOutput, commPlanLoading, systemPrompt);
                 } else {
-                    commPlanOutput.textContent = 'Please enter details for the communication plan.';
+                    commPlanOutput.textContent = 'Veuillez entrer des détails pour le plan de communication.';
                 }
             });
         });
     </script>
 </body>
 </html>
-
