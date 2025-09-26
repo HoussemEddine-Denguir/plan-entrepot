@@ -1,7 +1,5 @@
 {
-  "name": "gemini-netlify-proxy",
-  // ... autres champs ...
-  "dependencies": {
+  "name": "gemini-netlify-proxy",  "dependencies": {
     "@google/genai": "^0.2.0"
   }
 }
