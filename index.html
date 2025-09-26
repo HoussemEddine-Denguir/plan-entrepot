@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Warehouse Restructuring Plan</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Inclure Chart.js pour les graphiques -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -36,10 +35,12 @@
             margin-right: auto;
             height: 300px;
             max-height: 350px;
+            padding-bottom: 50%; /* Maintenir le ratio pour responsive */
         }
         @media (min-width: 768px) {
             .chart-container {
                 height: 320px;
+                padding-bottom: 0; /* Désactiver le padding sur desktop si hauteur fixe */
             }
         }
         .technique-card {
@@ -75,18 +76,6 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
-        }
-        /* Style pour les messages d'erreur/succès */
-        .message-box {
-            padding: 0.75rem;
-            margin-top: 1rem;
-            border-radius: 0.5rem;
-            font-weight: 500;
-        }
-        .error-box {
-            background-color: #fee2e2;
-            color: #ef4444;
-            border: 1px solid #fca5a5;
         }
     </style>
 </head>
@@ -165,7 +154,6 @@
                         <div id="questions-loading" class="loading-spinner ml-2"></div>
                     </button>
                     <div id="questions-output" class="mt-4 p-4 bg-white rounded-lg border border-slate-200 text-sm whitespace-pre-wrap leading-relaxed"></div>
-                    <div id="questions-message" class="message-box hidden"></div>
                 </div>
             </section>
 
@@ -248,7 +236,6 @@
                         <div id="role-desc-loading" class="loading-spinner ml-2"></div>
                     </button>
                     <div id="role-desc-output" class="mt-4 p-4 bg-white rounded-lg border border-slate-200 text-sm whitespace-pre-wrap leading-relaxed"></div>
-                    <div id="role-desc-message" class="message-box hidden"></div>
                 </div>
             </section>
 
@@ -297,7 +284,6 @@
                         <div id="comm-plan-loading" class="loading-spinner ml-2"></div>
                     </button>
                     <div id="comm-plan-output" class="mt-4 p-4 bg-white rounded-lg border border-slate-200 text-sm whitespace-pre-wrap leading-relaxed"></div>
-                    <div id="comm-plan-message" class="message-box hidden"></div>
                 </div>
             </section>
         </main>
@@ -307,47 +293,32 @@
         document.addEventListener('DOMContentLoaded', function () {
             const tabs = document.querySelectorAll('.tab-btn');
             const contentSections = document.querySelectorAll('.content-section');
-            
-            // --- Configuration du Proxy Sécurisé ---
-            // Ceci utilise un chemin relatif qui sera géré par la Netlify Function.
-            const PROXY_ENDPOINT = '/api/gemini-proxy'; 
 
-            // Éléments de la Phase 1
+            // ⚠️ ATTENTION : MODIFICATION CRUCIALE ICI ⚠️
+            // L'application est sur GitHub Pages (Domaine 1) et la fonction est sur Netlify (Domaine 2).
+            // Nous devons utiliser l'URL complète pour éviter les erreurs de connexion.
+            // REMPLACEZ <VOTRE-DOMAINE-NETLIFY-ICI>.netlify.app par votre domaine Netlify réel.
+            const netlifyDomain = 'https://effortless-kulfi-52a95b.netlify.app'; 
+            const PROXY_ENDPOINT = netlifyDomain + '/api/gemini-proxy'; 
+            // ----------------------------------------------------
+
             const interviewRoleInput = document.getElementById('interview-role-input');
             const generateQuestionsBtn = document.getElementById('generate-questions-btn');
             const questionsOutput = document.getElementById('questions-output');
             const questionsLoading = document.getElementById('questions-loading');
-            const questionsMessage = document.getElementById('questions-message');
 
-            // Éléments de la Phase 2
             const roleDescInput = document.getElementById('role-desc-input');
             const generateRoleDescBtn = document.getElementById('generate-role-desc-btn');
             const roleDescOutput = document.getElementById('role-desc-output');
             const roleDescLoading = document.getElementById('role-desc-loading');
-            const roleDescMessage = document.getElementById('role-desc-message');
 
-            // Éléments de la Phase 3
             const commPlanInput = document.getElementById('comm-plan-input');
             const generateCommPlanBtn = document.getElementById('generate-comm-plan-btn');
             const commPlanOutput = document.getElementById('comm-plan-output');
             const commPlanLoading = document.getElementById('comm-plan-loading');
-            const commPlanMessage = document.getElementById('comm-plan-message');
-
-
-            // --- Fonctions d'UI ---
 
             const showLoading = (loader) => loader.style.display = 'block';
             const hideLoading = (loader) => loader.style.display = 'none';
-
-            function showMessage(messageBox, type, text) {
-                messageBox.classList.remove('hidden', 'error-box');
-                messageBox.classList.add(type === 'error' ? 'error-box' : 'bg-green-100', 'text-green-700');
-                messageBox.textContent = text;
-                
-                setTimeout(() => {
-                    messageBox.classList.add('hidden');
-                }, 5000);
-            }
 
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
@@ -364,7 +335,6 @@
                 });
             });
 
-            // Logique d'interaction RACI
             const raciTable = document.querySelector('.raci-table');
             if(raciTable) {
                 const cells = raciTable.querySelectorAll('td, th');
@@ -372,14 +342,10 @@
                     cell.addEventListener('mouseover', () => {
                         const colIndex = cell.cellIndex;
                         const rowIndex = cell.parentElement.rowIndex;
-                        
-                        // Highlight row
                         const rowCells = raciTable.rows[rowIndex].cells;
                         for(let i=0; i<rowCells.length; i++) {
                             rowCells[i].classList.add('highlight');
                         }
-                        
-                        // Highlight column
                         for(let i=0; i<raciTable.rows.length; i++) {
                             raciTable.rows[i].cells[colIndex].classList.add('highlight');
                         }
@@ -390,7 +356,9 @@
                 });
             }
 
-            // --- Configuration des Graphiques Chart.js ---
+            // Chart setup remains the same (removed for brevity, but assumed to be here)
+            // ... (Workload Chart, Accuracy Chart, Cycle Time Chart initialization) ...
+            
             const chartOptions = {
                 responsive: true,
                 maintainAspectRatio: false,
@@ -399,19 +367,36 @@
                         position: 'bottom',
                         labels: {
                             padding: 15,
-                            font: { size: 12 }
+                            font: {
+                                size: 12
+                            }
                         }
                     }
                 },
                 scales: {
                      x: {
-                        ticks: { font: { size: 10 }, autoSkip: false, maxRotation: 0, minRotation: 0 },
-                        grid: { display: false }
+                        ticks: {
+                            font: {
+                                size: 10
+                            },
+                            autoSkip: false,
+                            maxRotation: 0,
+                            minRotation: 0
+                        },
+                        grid: {
+                            display: false
+                        }
                     },
                     y: {
                         beginAtZero: true,
-                         grid: { color: '#e2e8f0' },
-                        ticks: { font: { size: 10 } }
+                         grid: {
+                            color: '#e2e8f0'
+                        },
+                        ticks: {
+                             font: {
+                                size: 10
+                            }
+                        }
                     }
                 }
             };
@@ -451,7 +436,9 @@
                         responsive: true,
                         maintainAspectRatio: false,
                          plugins: {
-                            legend: { display: false },
+                            legend: {
+                                display: false
+                            },
                              tooltip: {
                                 callbacks: {
                                     label: function(context) {
@@ -482,7 +469,9 @@
                          responsive: true,
                         maintainAspectRatio: false,
                          plugins: {
-                             legend: { display: false }
+                             legend: {
+                                display: false,
+                            }
                          },
                          scales: {
                             y: {
@@ -495,16 +484,14 @@
             }
 
 
-            // --- Fonction d'Appel d'API avec Backoff Exponentiel ---
-            const callApi = async (userPrompt, outputElement, loadingElement, messageBox, systemPrompt) => {
+            // --- UPDATED API CALL FUNCTION ---
+            const callApi = async (userPrompt, outputElement, loadingElement, systemPrompt) => {
                 showLoading(loadingElement);
                 outputElement.textContent = 'Generating content...';
-                messageBox.classList.add('hidden'); // Cacher les anciens messages
                 let retries = 3;
-
                 while (retries > 0) {
                     try {
-                        // Le corps de la requête envoie les deux prompts au proxy
+                        // The payload now sends the prompts to our secure proxy
                         const payload = { userQuery: userPrompt, systemPrompt };
                         
                         const response = await fetch(PROXY_ENDPOINT, {
@@ -513,32 +500,29 @@
                             body: JSON.stringify(payload)
                         });
 
-                        const result = await response.json();
-
+                        // Vérifier si la réponse du proxy est bonne (statut 200)
                         if (!response.ok) {
-                             // Erreur du proxy (statut 4xx/5xx)
-                            const errorMessage = result.error || 'Erreur inconnue du proxy.';
-                            throw new Error(`Proxy status error: ${response.status} - ${errorMessage}`);
+                             // Si le proxy renvoie une erreur (ex: 401 pour clé invalide), nous la lisons ici
+                            const errorData = await response.json();
+                            throw new Error(`Proxy error: ${response.status} - ${errorData.details || errorData.error || 'Unknown error'}`);
                         }
                         
-                        const generatedText = result.text; // Récupération du champ 'text' du résultat du proxy
+                        const result = await response.json();
+                        const generatedText = result.text; // Expecting { text: "..." } from the proxy
                         
                         if (generatedText) {
                             outputElement.textContent = generatedText;
-                            showMessage(messageBox, 'success', 'Contenu généré avec succès.');
-                            break; // Succès, sortir de la boucle de retry
+                            break;
                         } else {
-                             // Réponse OK mais sans texte généré
-                             throw new Error('Received empty text response from proxy/Gemini.');
+                             throw new Error('Received empty response from proxy.');
                         }
                     } catch (error) {
                         console.error("API Call Error:", error);
                         retries--;
                         if (retries === 0) {
-                           outputElement.textContent = 'Échec de la génération de contenu après plusieurs tentatives. Veuillez vérifier votre déploiement Netlify et la clé API.';
-                           showMessage(messageBox, 'error', 'Erreur critique : vérifiez la console pour les détails du proxy.');
+                           outputElement.textContent = `Failed to generate content. Please ensure your Netlify Domain is correct and your GEMINI_API_KEY is set. Error: ${error.message}`;
                         } else {
-                            // Attente avec backoff exponentiel
+                            // Implémentation d'un backoff exponentiel simple pour les tentatives
                             await new Promise(res => setTimeout(res, 1000 * (4 - retries)));
                         }
                     }
@@ -546,48 +530,41 @@
                 hideLoading(loadingElement);
             };
 
-            // --- Gestionnaires d'Événements pour les Assistants IA ---
+            // --- Event Listeners (Use the new callApi function) ---
 
-            // Phase 1 : Questions d'Entrevue
             generateQuestionsBtn.addEventListener('click', () => {
                 const role = interviewRoleInput.value.trim();
                 if (role) {
-                    const systemPrompt = "You are an expert business analyst and human resources consultant. Your task is to generate relevant and insightful interview questions for a warehouse and inventory management restructuring project.";
+                    const systemPrompt = "You are an expert business analyst and human resources consultant. Your task is to generate relevant and insightful interview questions for a warehouse and inventory management restructuring project. Use French language for the output.";
                     const userPrompt = `Generate a list of interview questions for a stakeholder with the role of "${role}". The questions should help understand their current responsibilities, challenges, and ideas for a new organizational structure. Present the questions as a numbered list.`;
-                    callApi(userPrompt, questionsOutput, questionsLoading, questionsMessage, systemPrompt);
+                    callApi(userPrompt, questionsOutput, questionsLoading, systemPrompt);
                 } else {
-                    showMessage(questionsMessage, 'error', 'Veuillez entrer un rôle pour générer les questions.');
+                    questionsOutput.textContent = 'Please enter a role (e.g., Inventory Manager) to generate questions.';
                 }
             });
 
-            // Phase 2 : Description de Rôle
             generateRoleDescBtn.addEventListener('click', () => {
                 const description = roleDescInput.value.trim();
                 if (description) {
-                    const systemPrompt = "You are a professional HR specialist. Draft a formal, attractive job description of maximum 150 words based on the user's input. The description must include a Title, a brief Summary, and 3 bullet points for key Responsibilities.";
-                    const userPrompt = `Draft a role description based on these details: ${description}`;
-                    callApi(userPrompt, roleDescOutput, roleDescLoading, roleDescMessage, systemPrompt);
+                    const systemPrompt = "You are an expert human resources specialist. Your task is to write a detailed job description based on the input provided. Use French language for the output.";
+                    const userPrompt = `Based on this input: "${description}", write a complete role description including key responsibilities, qualifications, and reporting structure.`;
+                    callApi(userPrompt, roleDescOutput, roleDescLoading, systemPrompt);
                 } else {
-                    showMessage(roleDescMessage, 'error', 'Veuillez entrer les détails du rôle.');
+                    roleDescOutput.textContent = 'Please enter a role title and a few responsibilities to generate a description.';
                 }
             });
 
-            // Phase 3 : Communication de Changement
             generateCommPlanBtn.addEventListener('click', () => {
-                const communicationPlan = commPlanInput.value.trim();
-                if (communicationPlan) {
-                    const systemPrompt = "You are a senior communication director. Write an encouraging and professional internal announcement (maximum 100 words) to all warehouse staff about the upcoming restructuring. The message should explain the *why* and focus on positive outcomes and next steps (e.g., training). Use the user's input as key talking points.";
-                    const userPrompt = `Draft an internal announcement based on these points: ${communicationPlan}`;
-                    callApi(userPrompt, commPlanOutput, commPlanLoading, commPlanMessage, systemPrompt);
+                const plan = commPlanInput.value.trim();
+                if (plan) {
+                    const systemPrompt = "You are a corporate communications manager. Draft a professional, clear, and reassuring internal communication memo regarding organizational changes. Use French language for the output.";
+                    const userPrompt = `Draft a communication memo based on this plan: "${plan}". The tone should be positive, focusing on the future and the benefits for the staff.`;
+                    callApi(userPrompt, commPlanOutput, commPlanLoading, systemPrompt);
                 } else {
-                    showMessage(commPlanMessage, 'error', 'Veuillez entrer les points clés de la communication.');
+                    commPlanOutput.textContent = 'Please enter key elements of your communication plan.';
                 }
             });
-            
-            // Initialiser l'état actif sur le premier onglet
-            document.querySelector('.tab-btn[data-target="intro"]').click();
         });
     </script>
 </body>
 </html>
-
