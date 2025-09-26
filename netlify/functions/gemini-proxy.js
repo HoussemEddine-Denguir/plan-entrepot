@@ -1,82 +1,115 @@
+import { GoogleGenAI } from '@google/genai';
+
 /**
- * Secure Backend Proxy Function for calling the Gemini API.
- * * This file should be deployed to a serverless platform (e.g., Netlify Functions, Vercel)
- * where the GEMINI_API_KEY can be securely stored as an environment variable, hidden from the client.
+ * Fonction Netlify Serverless qui sert de proxy sécurisé pour l'API Gemini.
+ * Cette fonction utilise la clé API stockée dans les variables d'environnement de Netlify.
  */
-
-// Load the API Key from a secure environment variable
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY; 
-const PROXY_MODEL = "gemini-2.5-flash-preview-05-20";
-
-if (!GEMINI_API_KEY) {
-    console.error("GEMINI_API_KEY environment variable is not set.");
-}
-
-// Handler function for serverless environments (e.g., Netlify/Vercel)
 exports.handler = async (event, context) => {
-    // 1. Basic security check for the API key presence
-    if (!GEMINI_API_KEY) {
+    // 1. Définir les Headers CORS pour permettre l'appel depuis un autre domaine (GitHub Pages)
+    const corsHeaders = {
+        'Access-Control-Allow-Origin': '*', // Permet l'accès depuis n'importe quel domaine
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+    };
+
+    // Gérer les requêtes OPTIONS (pré-vol CORS)
+    if (event.httpMethod === 'OPTIONS') {
         return {
-            statusCode: 500,
-            body: JSON.stringify({ error: "Server configuration error: API Key missing." }),
+            statusCode: 204, // No Content
+            headers: corsHeaders,
+            body: '',
         };
     }
-    
-    // 2. Ensure only POST requests with data are processed
-    if (event.httpMethod !== 'POST' || !event.body) {
+
+    // 2. Vérifier la méthode HTTP
+    if (event.httpMethod !== 'POST') {
         return {
             statusCode: 405,
-            body: JSON.stringify({ error: "Method Not Allowed or missing body." }),
+            headers: corsHeaders,
+            body: JSON.stringify({ error: 'Method Not Allowed' }),
+        };
+    }
+
+    // 3. Récupérer la clé API (Variable d'environnement sécurisée)
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+        console.error("GEMINI_API_KEY is not set in environment variables.");
+        return {
+            statusCode: 500,
+            headers: corsHeaders,
+            body: JSON.stringify({ error: 'Configuration Error: API Key missing on server. Check Netlify Environment variables.' }),
         };
     }
 
     try {
-        const { userPrompt, systemPrompt } = JSON.parse(event.body);
+        // 4. Parser le corps de la requête (userQuery et systemPrompt)
+        const { userQuery, systemPrompt } = JSON.parse(event.body);
 
-        // 3. Construct the official Gemini API payload
-        const payload = {
-            contents: [{ parts: [{ text: userPrompt }] }],
-            systemInstruction: { parts: [{ text: systemPrompt }] },
-        };
-        
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${PROXY_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
-
-        // 4. Call the external Gemini API securely from the server environment
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-
-        if (!response.ok) {
-            const errorText = await response.text();
-             console.error(`Gemini API call failed: ${response.status} - ${errorText}`);
+        if (!userQuery) {
             return {
-                statusCode: response.status,
-                body: JSON.stringify({ error: "External API error.", details: errorText }),
+                statusCode: 400,
+                headers: corsHeaders,
+                body: JSON.stringify({ error: 'Missing userQuery in request body.' }),
             };
         }
 
-        const result = await response.json();
+        // 5. Initialiser le client Gemini
+        const ai = new GoogleGenAI({ apiKey });
         
-        // 5. Extract and return the generated text to the frontend
-        const generatedText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
-        
+        // 6. Construire la requête API
+        const request = {
+            // Le tableau 'contents' contient la conversation. Pour une requête simple, c'est un seul rôle 'user'.
+            contents: [{ 
+                role: "user", 
+                parts: [{ text: userQuery }] // Structure de texte correcte, corrige l'erreur 400.
+            }],
+            config: {
+                systemInstruction: systemPrompt,
+                model: 'gemini-2.5-flash', 
+                temperature: 0.5,
+                maxOutputTokens: 2048,
+            }
+        };
+
+        // 7. Appeler l'API Google Gemini
+        const response = await ai.generateContent(request);
+
+        // 8. Extraire le texte de la réponse
+        const generatedText = response.text;
+
+        // 9. Retourner la réponse au frontend
         return {
             statusCode: 200,
-            headers: {
-                // Allows your GitHub Pages site to communicate with the serverless function
-                'Access-Control-Allow-Origin': '*', 
-                'Content-Type': 'application/json',
-            },
+            headers: corsHeaders,
             body: JSON.stringify({ text: generatedText }),
         };
 
     } catch (error) {
-        console.error("Proxy function error:", error);
+        console.error('Execution Error in Netlify Function:', error);
+        
+        let statusCode = 500;
+        let errorMessage = 'An unknown error occurred on the server.';
+        
+        // Tentative de gestion des erreurs de l'API (4xx ou 5xx)
+        if (error.response && error.response.status) {
+            statusCode = error.response.status;
+            // Tente de récupérer le message d'erreur JSON de Google
+            try {
+                const errorData = JSON.parse(error.response.data);
+                errorMessage = errorData.error ? errorData.error.message : error.message;
+            } catch {
+                errorMessage = error.response.data || error.message;
+            }
+        } else if (error.message) {
+            errorMessage = error.message;
+        }
+
         return {
-            statusCode: 500,
-            body: JSON.stringify({ error: "Internal server error during processing." }),
+            statusCode: statusCode,
+            headers: corsHeaders,
+            body: JSON.stringify({ 
+                error: `Gemini API call failed: ${statusCode} - ${errorMessage}` 
+            }),
         };
     }
 };
