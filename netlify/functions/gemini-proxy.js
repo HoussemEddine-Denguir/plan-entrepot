@@ -1,7 +1,7 @@
 const { GoogleGenAI } = require('@google/genai');
 
-// Lisez la clé API depuis les variables d'environnement de Netlify.
-// Assurez-vous d'avoir défini une variable nommée GEMINI_API_KEY dans vos réglages Netlify.
+// Lire la clé API depuis les variables d'environnement de Netlify.
+// Variable : GEMINI_API_KEY
 const apiKey = process.env.GEMINI_API_KEY;
 
 // Initialiser le client GoogleGenAI
@@ -31,6 +31,18 @@ exports.handler = async (event, context) => {
          };
     }
 
+    // Gérer les en-têtes CORS pour les requêtes provenant de GitHub Pages
+    const headers = {
+        "Access-Control-Allow-Origin": "*", // Autorise tous les domaines (y compris votre GitHub Pages)
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Content-Type": "application/json"
+    };
+
+    // Gérer la pré-requête OPTIONS (CORS)
+    if (event.httpMethod === 'OPTIONS') {
+        return { statusCode: 200, headers };
+    }
+
     try {
         // 3. Extraction des données du corps de la requête (envoyées par votre frontend HTML)
         const { userQuery, systemPrompt } = JSON.parse(event.body);
@@ -38,6 +50,7 @@ exports.handler = async (event, context) => {
         if (!userQuery) {
             return {
                 statusCode: 400,
+                headers,
                 body: JSON.stringify({ error: "Missing 'userQuery' in request body." }),
             };
         }
@@ -59,16 +72,17 @@ exports.handler = async (event, context) => {
         // 5. Retourner la réponse au frontend
         return {
             statusCode: 200,
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers,
             body: JSON.stringify({ text: generatedText }),
         };
 
     } catch (error) {
         console.error("Gemini API Error:", error);
+        // Si l'erreur est un problème de clé API invalide, le code d'état doit le refléter.
+        const statusCode = error.message.includes('API Key') ? 401 : 500;
         return {
-            statusCode: 500,
+            statusCode: statusCode,
+            headers,
             body: JSON.stringify({ error: "Failed to communicate with the AI model.", details: error.message }),
         };
     }
