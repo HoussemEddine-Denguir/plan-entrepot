@@ -1,0 +1,9 @@
+{
+  "name": "gemini-proxy-function",
+  "version": "1.0.0",
+  "description": "A Netlify function to securely proxy requests to the Google Gemini API.",
+  "main": "gemini-proxy.js",
+  "dependencies": {
+    "@google/genai": "^0.1.0"
+  }
+}
