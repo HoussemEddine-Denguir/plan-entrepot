@@ -294,12 +294,10 @@
             const tabs = document.querySelectorAll('.tab-btn');
             const contentSections = document.querySelectorAll('.content-section');
 
-            // ⚠️ ATTENTION : MODIFICATION CRUCIALE ICI ⚠️
-            // L'application est sur GitHub Pages (Domaine 1) et la fonction est sur Netlify (Domaine 2).
-            // Nous devons utiliser l'URL complète pour éviter les erreurs de connexion.
-            // REMPLACEZ <VOTRE-DOMAINE-NETLIFY-ICI>.netlify.app par votre domaine Netlify réel.
+            // ⚠️ ADRESSE NETLIFY CORRIGÉE ET INSÉRÉE ICI ⚠️
+            // Cette URL est utilisée pour les appels API.
             const netlifyDomain = 'https://effortless-kulfi-52a95b.netlify.app'; 
-            const PROXY_ENDPOINT = netlifyDomain + '/api/gemini-proxy'; 
+            const PROXY_ENDPOINT = netlifyDomain + '/.netlify/functions/gemini-proxy'; 
             // ----------------------------------------------------
 
             const interviewRoleInput = document.getElementById('interview-role-input');
@@ -356,9 +354,7 @@
                 });
             }
 
-            // Chart setup remains the same (removed for brevity, but assumed to be here)
-            // ... (Workload Chart, Accuracy Chart, Cycle Time Chart initialization) ...
-            
+            // --- Chart Initializations ---
             const chartOptions = {
                 responsive: true,
                 maintainAspectRatio: false,
@@ -491,7 +487,6 @@
                 let retries = 3;
                 while (retries > 0) {
                     try {
-                        // The payload now sends the prompts to our secure proxy
                         const payload = { userQuery: userPrompt, systemPrompt };
                         
                         const response = await fetch(PROXY_ENDPOINT, {
@@ -500,29 +495,37 @@
                             body: JSON.stringify(payload)
                         });
 
-                        // Vérifier si la réponse du proxy est bonne (statut 200)
+                        // S'il y a une erreur HTTP (4xx ou 5xx)
                         if (!response.ok) {
-                             // Si le proxy renvoie une erreur (ex: 401 pour clé invalide), nous la lisons ici
-                            const errorData = await response.json();
-                            throw new Error(`Proxy error: ${response.status} - ${errorData.details || errorData.error || 'Unknown error'}`);
+                             const errorText = await response.text();
+                             let errorMessage = `Proxy Error: ${response.status} ${response.statusText}`;
+
+                             try {
+                                 // Tente de lire le JSON si le proxy l'a renvoyé
+                                 const errorData = JSON.parse(errorText);
+                                 errorMessage = errorData.details || errorData.error || errorMessage;
+                             } catch (e) {
+                                 // Sinon, Netlify a peut-être renvoyé une page d'erreur HTML simple
+                                 errorMessage += `. Response content suggests a server error (check Netlify logs for 500 error).`;
+                             }
+                             throw new Error(errorMessage);
                         }
                         
                         const result = await response.json();
-                        const generatedText = result.text; // Expecting { text: "..." } from the proxy
+                        const generatedText = result.text;
                         
                         if (generatedText) {
                             outputElement.textContent = generatedText;
                             break;
                         } else {
-                             throw new Error('Received empty response from proxy.');
+                             throw new Error('Received empty or malformed text response from proxy.');
                         }
                     } catch (error) {
                         console.error("API Call Error:", error);
                         retries--;
                         if (retries === 0) {
-                           outputElement.textContent = `Failed to generate content. Please ensure your Netlify Domain is correct and your GEMINI_API_KEY is set. Error: ${error.message}`;
+                           outputElement.textContent = `🚨 Failed to generate content after 3 attempts. Error: ${error.message}. Please check: 1. Your GEMINI_API_KEY on Netlify. 2. The Netlify function logs.`;
                         } else {
-                            // Implémentation d'un backoff exponentiel simple pour les tentatives
                             await new Promise(res => setTimeout(res, 1000 * (4 - retries)));
                         }
                     }
@@ -530,7 +533,7 @@
                 hideLoading(loadingElement);
             };
 
-            // --- Event Listeners (Use the new callApi function) ---
+            // --- Event Listeners ---
 
             generateQuestionsBtn.addEventListener('click', () => {
                 const role = interviewRoleInput.value.trim();
@@ -568,3 +571,8 @@
     </script>
 </body>
 </html>
+```eof
+
+Une fois que vous avez commité et poussé ce fichier, **la connexion est définitivement assurée**. Si le problème persiste, le message d'erreur affiché sur la page (l'alerte `🚨 Failed to generate content...`) vous donnera le statut d'erreur précis (401, 500, etc.) pour confirmer si la clé API est la source du blocage.
+
+**Veuillez pousser ce fichier et me donner le message d'erreur précis affiché sur la page web.**
