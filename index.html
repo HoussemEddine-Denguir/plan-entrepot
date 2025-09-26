@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plan de Restructuration d'Entrepôt Interactif</title>
+    <title>Interactive Warehouse Restructuring Plan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -77,69 +77,51 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        /* Style spécifique pour le contenu Markdown généré */
-        #questions-output p, #role-desc-output p, #comm-plan-output p {
-            margin-bottom: 1em; /* Espace entre les paragraphes */
-        }
-        #questions-output ol, #role-desc-output ol, #comm-plan-output ol,
-        #questions-output ul, #role-desc-output ul, #comm-plan-output ul {
-            margin-left: 1.5em; /* Retrait pour les listes */
-            padding-left: 0;
-            list-style-type: decimal;
-        }
-        #questions-output li, #role-desc-output li, #comm-plan-output li {
-            margin-bottom: 0.5em; /* Espace entre les items de liste */
-        }
-        /* Ajout d'une police plus moderne pour les balises générées */
-        #questions-output strong, #role-desc-output strong, #comm-plan-output strong {
-             font-weight: 700; /* Assurer que le gras est bien visible */
-             color: #1e293b;
-        }
     </style>
 </head>
 <body class="antialiased">
 
     <div class="min-h-screen container mx-auto p-4 sm:p-6 lg:p-8">
         <header class="text-center mb-8 md:mb-12">
-            <h1 class="text-3xl md:text-4xl font-bold text-slate-800">Plan de Restructuration d'Entrepôt</h1>
-            <p class="mt-2 text-lg text-slate-600">Un guide interactif pour réimaginer vos opérations d'entrepôt.</p>
+            <h1 class="text-3xl md:text-4xl font-bold text-slate-800">Warehouse Restructuring Plan</h1>
+            <p class="mt-2 text-lg text-slate-600">An interactive guide to reimagining your warehouse operations.</p>
              <p class="mt-4 text-sm font-medium text-red-600 border border-red-300 bg-red-50 p-3 rounded-lg">
-                Les appels API passent par une fonction Netlify sécurisée. **Assurez-vous que le fichier <code>gemini-proxy.js</code> est bien déployé** sur Netlify pour que les fonctionnalités IA fonctionnent.
+                API Calls are now proxied through a secure backend (e.g., Netlify Function). **You must deploy the <code>gemini-proxy.js</code> file** separately for AI features to work.
             </p>
         </header>
 
         <nav class="mb-8">
             <div class="flex flex-col sm:flex-row justify-center border-b border-slate-300">
                 <button data-target="intro" class="tab-btn active text-slate-600 font-semibold py-3 px-6 border-b-2 border-transparent hover:bg-slate-100">Introduction</button>
-                <button data-target="phase1" class="tab-btn text-slate-600 font-semibold py-3 px-6 border-b-2 border-transparent hover:bg-slate-100">Phase 1: État Actuel</button>
-                <button data-target="phase2" class="tab-btn text-slate-600 font-semibold py-3 px-6 border-b-2 border-transparent hover:bg-slate-100">Phase 2: État Futur</button>
-                <button data-target="phase3" class="tab-btn text-slate-600 font-semibold py-3 px-6 border-b-2 border-transparent hover:bg-slate-100">Phase 3: Implémentation</button>
+                <button data-target="phase1" class="tab-btn text-slate-600 font-semibold py-3 px-6 border-b-2 border-transparent hover:bg-slate-100">Phase 1: As-Is</button>
+                <button data-target="phase2" class="tab-btn text-slate-600 font-semibold py-3 px-6 border-b-2 border-transparent hover:bg-slate-100">Phase 2: To-Be</button>
+                <button data-target="phase3" class="tab-btn text-slate-600 font-semibold py-3 px-6 border-b-2 border-transparent hover:bg-slate-100">Phase 3: Implementation</button>
             </div>
         </nav>
 
         <main>
             <section id="intro" class="content-section active p-4 md:p-6 bg-white rounded-lg shadow-sm">
-                <h2 class="text-2xl font-bold mb-4 text-slate-700">Objectif et Introduction du Projet</h2>
+                <h2 class="text-2xl font-bold mb-4 text-slate-700">Project Goal & Introduction</h2>
                 <p class="text-slate-600 leading-relaxed">
-                    Bienvenue dans le guide interactif de restructuration de vos équipes de gestion des stocks et d'entrepôt. L'objectif principal est de repenser la distribution des processus et des rôles pour optimiser l'efficacité et la responsabilisation dans toutes vos installations. Utilisez les onglets ci-dessus pour naviguer entre les trois phases structurées de l'analyse.
+                    Welcome to the interactive guide for restructuring your inventory and warehouse management teams. The primary objective of this project is to reimagine how processes and roles are distributed to optimize efficiency and accountability across your facilities. This application will walk you through a structured, three-phase business analysis plan. Use the tabs above to navigate between the different phases of the project, from understanding your current state to implementing and monitoring a new, improved system.
                 </p>
                 <div class="mt-8">
-                    <h3 class="text-xl font-semibold mb-4 text-slate-700">Aperçu de l'Entrepôt</h3>
+                    <h3 class="text-xl font-semibold mb-4 text-slate-700">Warehouse Overview</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="warehouse-diagram-box">
-                            <h4 class="font-bold text-lg">Entrepôt 1</h4>
-                            <p class="text-slate-500">Matières Premières</p>
+                            <h4 class="font-bold text-lg">Warehouse 1</h4>
+                            <p class="text-slate-500">Raw Materials</p>
                             <div class="mt-4 space-y-2">
-                                <span class="inline-block bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full">Accessoires de Cuisine</span>
-                                <span class="inline-block bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full">Panneaux MDF</span>
+                                <span class="inline-block bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full">Kitchen Accessories</span>
+                                <span class="inline-block bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full">MDF Panels</span>
                             </div>
                         </div>
                         <div class="warehouse-diagram-box">
-                            <h4 class="font-bold text-lg">Entrepôt 2</h4>
-                            <p class="text-slate-500">Appareils et Produits Finis</p>
+                            <h4 class="font-bold text-lg">Warehouse 2</h4>
+                            <p class="text-slate-500">Appliances & Finished Goods</p>
                             <div class="mt-4 space-y-2">
-                                <span class="inline-block bg-purple-100 text-purple-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full">Appareils de Cuisine</span>
-                                <span class="inline-block bg-yellow-100 text-yellow-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full">Produits Finis</span>
+                                <span class="inline-block bg-purple-100 text-purple-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full">Kitchen Appliances</span>
+                                <span class="inline-block bg-yellow-100 text-yellow-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full">Final Produced Product</span>
                             </div>
                         </div>
                     </div>
@@ -147,28 +129,28 @@
             </section>
 
             <section id="phase1" class="content-section p-4 md:p-6 bg-white rounded-lg shadow-sm">
-                <h2 class="text-2xl font-bold mb-2 text-slate-700">Phase 1: Analyse de l'État Actuel (As-Is)</h2>
-                <p class="mb-6 text-slate-600">Avant de concevoir l'avenir, il faut comprendre le présent. Cette phase se concentre sur la cartographie des processus existants et l'identification des rôles actuels.</p>
+                <h2 class="text-2xl font-bold mb-2 text-slate-700">Phase 1: Current State Analysis (As-Is)</h2>
+                <p class="mb-6 text-slate-600">Before designing the future, you must deeply understand the present. This phase focuses on mapping existing processes, identifying pain points, and documenting current roles to establish a clear baseline for improvement.</p>
                 <div class="grid md:grid-cols-3 gap-6">
                     <div class="technique-card bg-slate-50 p-6 rounded-lg border border-slate-200">
-                        <h3 class="font-bold text-lg mb-2 text-blue-700">Cartographie des Processus</h3>
-                        <p class="text-slate-600">Créez des diagrammes visuels de vos flux de travail entrants et sortants pour identifier les goulots d'étranglement.</p>
+                        <h3 class="font-bold text-lg mb-2 text-blue-700">Process Mapping</h3>
+                        <p class="text-slate-600">Create visual diagrams of your current inbound and outbound workflows. This helps identify who does what, what inputs are needed, and what outputs are produced at each step.</p>
                     </div>
                     <div class="technique-card bg-slate-50 p-6 rounded-lg border border-slate-200">
-                        <h3 class="font-bold text-lg mb-2 text-blue-700">Entretiens avec les Parties Prenantes</h3>
-                        <p class="text-slate-600">Menez des entretiens avec les membres clés de l'équipe (managers, commis, chefs d'équipe) pour recueillir des informations qualitatives.</p>
+                        <h3 class="font-bold text-lg mb-2 text-blue-700">Stakeholder Interviews</h3>
+                        <p class="text-slate-600">Conduct interviews with key team members (managers, clerks, leads). This provides invaluable qualitative insight into daily tasks, challenges, and potential improvements.</p>
                     </div>
                     <div class="technique-card bg-slate-50 p-6 rounded-lg border border-slate-200">
-                        <h3 class="font-bold text-lg mb-2 text-blue-700">Analyse Documentaire</h3>
-                        <p class="text-slate-600">Examinez les descriptions de rôle et les Procédures Opérationnelles Standard (POS) existantes.</p>
+                        <h3 class="font-bold text-lg mb-2 text-blue-700">Document Analysis</h3>
+                        <p class="text-slate-600">Review existing documentation like role descriptions, training manuals, and Standard Operating Procedures (SOPs) to understand the formally defined processes and roles.</p>
                     </div>
                 </div>
                 <div class="mt-8 p-6 bg-slate-50 rounded-lg border border-slate-200">
-                    <h3 class="font-bold text-lg mb-2 text-slate-700">✨ Assistant de Questions d'Entrevue</h3>
-                    <p class="text-slate-600 text-sm mb-4">Obtenez une liste d'exemples de questions pour un rôle spécifique afin de faciliter vos entretiens.</p>
-                    <textarea id="interview-role-input" class="w-full h-24 p-2 mb-4 rounded-lg border border-slate-300 text-sm" placeholder="Ex. : Commis d'entrepôt ou Gestionnaire des stocks"></textarea>
+                    <h3 class="font-bold text-lg mb-2 text-slate-700">✨ Interview Question Assistant</h3>
+                    <p class="text-slate-600 text-sm mb-4">Get a list of sample questions for a specific role to help with your interviews.</p>
+                    <textarea id="interview-role-input" class="w-full h-24 p-2 mb-4 rounded-lg border border-slate-300 text-sm" placeholder="e.g., Warehouse Clerk or Inventory Manager"></textarea>
                     <button id="generate-questions-btn" class="flex items-center justify-center w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
-                        Générer des Questions ✨
+                        Generate Questions ✨
                         <div id="questions-loading" class="loading-spinner ml-2"></div>
                     </button>
                     <div id="questions-output" class="mt-4 p-4 bg-white rounded-lg border border-slate-200 text-sm whitespace-pre-wrap leading-relaxed"></div>
@@ -176,66 +158,66 @@
             </section>
 
             <section id="phase2" class="content-section p-4 md:p-6 bg-white rounded-lg shadow-sm">
-                <h2 class="text-2xl font-bold mb-2 text-slate-700">Phase 2: Définition de l'État Futur (To-Be)</h2>
-                <p class="mb-6 text-slate-600">À l'aide des analyses précédentes, cette phase définit la nouvelle structure optimisée, en définissant des rôles clairs pour rationaliser les opérations.</p>
+                <h2 class="text-2xl font-bold mb-2 text-slate-700">Phase 2: Future State Definition (To-Be)</h2>
+                <p class="mb-6 text-slate-600">Using insights from the 'As-Is' analysis, this phase focuses on designing the new, optimized structure. Here you will define clear roles and responsibilities to streamline operations and create a model for the future.</p>
                 <div class="grid lg:grid-cols-2 gap-8">
                     <div>
-                        <h3 class="text-xl font-semibold mb-4 text-slate-700">Techniques de Modélisation Clés</h3>
+                        <h3 class="text-xl font-semibold mb-4 text-slate-700">Key Modeling Techniques</h3>
                         <div class="space-y-4">
                             <div class="technique-card bg-slate-50 p-4 rounded-lg border border-slate-200">
-                                <h4 class="font-bold text-md text-blue-700">Ateliers d'Exigences</h4>
-                                <p class="text-slate-600 text-sm">Réunir les parties prenantes pour s'entendre sur les fonctions de base et les compétences requises dans la nouvelle structure.</p>
+                                <h4 class="font-bold text-md text-blue-700">Requirements Workshops</h4>
+                                <p class="text-slate-600 text-sm">Bring stakeholders together to brainstorm and agree on core functions, required skills, and how to best leverage the two-warehouse setup.</p>
                             </div>
                             <div class="technique-card bg-slate-50 p-4 rounded-lg border border-slate-200">
-                                <h4 class="font-bold text-md text-blue-700">Définition des Rôles</h4>
-                                <p class="text-slate-600 text-sm">Définir les nouveaux rôles et documenter leur objectif, leurs responsabilités et leurs compétences nécessaires.</p>
+                                <h4 class="font-bold text-md text-blue-700">Role Definition</h4>
+                                <p class="text-slate-600 text-sm">Define new roles needed for future processes. For each, document its purpose, responsibilities, and necessary competencies.</p>
                             </div>
                             <div class="technique-card bg-slate-50 p-4 rounded-lg border border-slate-200">
-                                <h4 class="font-bold text-md text-blue-700">Analyse de la Charge de Travail</h4>
-                                <p class="text-slate-600 text-sm">Estimer le volume d'activités pour chaque nouveau rôle afin d'assurer un équilibre du travail.</p>
+                                <h4 class="font-bold text-md text-blue-700">Workload Analysis</h4>
+                                <p class="text-slate-600 text-sm">Estimate the volume of activities for each new role to ensure work is distributed balancedly. The chart shows a sample analysis.</p>
                             </div>
                         </div>
                          <div class="mt-6">
-                            <h3 class="text-xl font-semibold mb-4 text-slate-700">Exemple : Analyse de la Charge</h3>
+                            <h3 class="text-xl font-semibold mb-4 text-slate-700">Example: Workload Analysis</h3>
                             <div class="chart-container h-64 md:h-72">
                                 <canvas id="workloadChart"></canvas>
                             </div>
                         </div>
                     </div>
                     <div>
-                        <h3 class="text-xl font-semibold mb-4 text-slate-700">Exemple : Matrice RACI</h3>
-                        <p class="text-slate-500 mb-4 text-sm">Passez la souris sur une tâche pour voir les responsabilités. (Responsible, Accountable, Consulted, Informed).</p>
+                        <h3 class="text-xl font-semibold mb-4 text-slate-700">Interactive RACI Matrix Example</h3>
+                        <p class="text-slate-500 mb-4 text-sm">Hover over a task or role to highlight responsibilities. This matrix clarifies who is Responsible, Accountable, Consulted, and Informed for key tasks.</p>
                         <div class="overflow-x-auto">
                             <table class="raci-table w-full text-left border-collapse">
                                 <thead>
                                     <tr>
-                                        <th class="p-3 font-semibold uppercase bg-slate-100 border border-slate-300">Processus / Tâche</th>
-                                        <th class="p-3 font-semibold uppercase bg-slate-100 border border-slate-300">Spécialiste Entrant</th>
-                                        <th class="p-3 font-semibold uppercase bg-slate-100 border border-slate-300">Coordonnateur Expédition</th>
-                                        <th class="p-3 font-semibold uppercase bg-slate-100 border border-slate-300">Gestionnaire Entrepôt</th>
+                                        <th class="p-3 font-semibold uppercase bg-slate-100 border border-slate-300">Process / Task</th>
+                                        <th class="p-3 font-semibold uppercase bg-slate-100 border border-slate-300">Inbound Specialist</th>
+                                        <th class="p-3 font-semibold uppercase bg-slate-100 border border-slate-300">Dispatch Coordinator</th>
+                                        <th class="p-3 font-semibold uppercase bg-slate-100 border border-slate-300">Warehouse Manager</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="hover:bg-slate-50">
-                                        <td class="p-3 font-semibold border border-slate-200">Réception Marchandises (MDF)</td>
+                                        <td class="p-3 font-semibold border border-slate-200">Goods Receipt (MDF)</td>
                                         <td class="p-3 border border-slate-200">Responsible</td>
                                         <td class="p-3 border border-slate-200">Informed</td>
                                         <td class="p-3 border border-slate-200">Accountable, Consulted</td>
                                     </tr>
                                     <tr class="hover:bg-slate-50">
-                                        <td class="p-3 font-semibold border border-slate-200">Comptage d'Inventaire</td>
+                                        <td class="p-3 font-semibold border border-slate-200">Inventory Count</td>
                                         <td class="p-3 border border-slate-200">Responsible</td>
                                         <td class="p-3 border border-slate-200">Consulted</td>
                                         <td class="p-3 border border-slate-200">Accountable</td>
                                     </tr>
                                     <tr class="hover:bg-slate-50">
-                                        <td class="p-3 font-semibold border border-slate-200">Préparation Commandes</td>
+                                        <td class="p-3 font-semibold border border-slate-200">Order Picking (Products)</td>
                                         <td class="p-3 border border-slate-200">Informed</td>
                                         <td class="p-3 border border-slate-200">Responsible</td>
                                         <td class="p-3 border border-slate-200">Accountable, Consulted</td>
                                     </tr>
                                     <tr class="hover:bg-slate-50">
-                                        <td class="p-3 border border-slate-200">Contrôle Qualité</td>
+                                        <td class="p-3 border border-slate-200">Quality Control</td>
                                         <td class="p-3 border border-slate-200">Responsible</td>
                                         <td class="p-3 border border-slate-200">Responsible</td>
                                         <td class="p-3 border border-slate-200">Accountable</td>
@@ -246,11 +228,11 @@
                     </div>
                 </div>
                 <div class="mt-8 p-6 bg-slate-50 rounded-lg border border-slate-200">
-                    <h3 class="font-bold text-lg mb-2 text-slate-700">✨ Assistant de Description de Rôle</h3>
-                    <p class="text-slate-600 text-sm mb-4">Entrez un nouveau titre de rôle et quelques responsabilités clés pour générer une description complète.</p>
-                    <textarea id="role-desc-input" class="w-full h-24 p-2 mb-4 rounded-lg border border-slate-300 text-sm" placeholder="Ex. : Gestionnaire de la logistique entrante, supervision des stocks et du personnel."></textarea>
+                    <h3 class="font-bold text-lg mb-2 text-slate-700">✨ Role Description Assistant</h3>
+                    <p class="text-slate-600 text-sm mb-4">Input a new role title and a few key responsibilities to generate a full role description.</p>
+                    <textarea id="role-desc-input" class="w-full h-24 p-2 mb-4 rounded-lg border border-slate-300 text-sm" placeholder="e.g., Inbound Logistics Manager, overseeing inventory and staff."></textarea>
                     <button id="generate-role-desc-btn" class="flex items-center justify-center w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
-                        Générer Description de Rôle ✨
+                        Generate Role Description ✨
                         <div id="role-desc-loading" class="loading-spinner ml-2"></div>
                     </button>
                     <div id="role-desc-output" class="mt-4 p-4 bg-white rounded-lg border border-slate-200 text-sm whitespace-pre-wrap leading-relaxed"></div>
@@ -258,34 +240,34 @@
             </section>
 
             <section id="phase3" class="content-section p-4 md:p-6 bg-white rounded-lg shadow-sm">
-                <h2 class="text-2xl font-bold mb-2 text-slate-700">Phase 3: Implémentation et Suivi</h2>
-                <p class="mb-6 text-slate-600">Cette phase se concentre sur la gestion de la transition et l'établissement de métriques pour mesurer le succès. Une bonne exécution est la clé.</p>
+                <h2 class="text-2xl font-bold mb-2 text-slate-700">Phase 3: Implementation & Monitoring</h2>
+                <p class="mb-6 text-slate-600">With the future state defined, this final phase focuses on managing the transition smoothly and establishing metrics to track success. A well-executed plan ensures the new structure is adopted effectively and delivers the desired results.</p>
                 <div class="grid lg:grid-cols-2 gap-8 items-start">
                      <div>
-                        <h3 class="text-xl font-semibold mb-4 text-slate-700">Techniques d'Implémentation</h3>
+                        <h3 class="text-xl font-semibold mb-4 text-slate-700">Implementation Techniques</h3>
                         <div class="space-y-4">
                            <div class="technique-card bg-slate-50 p-6 rounded-lg border border-slate-200">
-                                <h3 class="font-bold text-lg mb-2 text-blue-700">Plan de Communication</h3>
-                                <p class="text-slate-600">Élaborez une stratégie claire pour communiquer les changements à toute l'équipe, expliquant la raison d'être et les avantages.</p>
+                                <h3 class="font-bold text-lg mb-2 text-blue-700">Communication Plan</h3>
+                                <p class="text-slate-600">Develop a clear strategy to communicate changes to all team members, explaining the rationale, benefits, and timelines to ensure buy-in and reduce uncertainty.</p>
                             </div>
                             <div class="technique-card bg-slate-50 p-6 rounded-lg border border-slate-200">
-                                <h3 class="font-bold text-lg mb-2 text-blue-700">Plan de Formation</h3>
-                                <p class="text-slate-600">Créez et offrez des sessions de formation pour doter les membres de l'équipe des compétences nécessaires à leurs nouveaux rôles.</p>
+                                <h3 class="font-bold text-lg mb-2 text-blue-700">Training Plan</h3>
+                                <p class="text-slate-600">Create and deliver training sessions to equip team members with the necessary skills and knowledge for their new or revised roles.</p>
                             </div>
                         </div>
                     </div>
                     <div>
-                         <h3 class="text-xl font-semibold mb-4 text-slate-700">Tableau de Bord des Métriques</h3>
-                         <p class="text-slate-500 mb-4 text-sm">Établissez des indicateurs de performance clés (KPI) pour mesurer le succès de la restructuration.</p>
+                         <h3 class="text-xl font-semibold mb-4 text-slate-700">Performance Metrics Dashboard</h3>
+                         <p class="text-slate-500 mb-4 text-sm">Establish Key Performance Indicators (KPIs) to measure the success of the restructuring. This sample dashboard shows critical metrics to monitor.</p>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 text-center">
-                                <h4 class="font-semibold text-slate-700">Précision des Stocks</h4>
+                                <h4 class="font-semibold text-slate-700">Inventory Accuracy</h4>
                                 <div class="chart-container h-48 sm:h-56">
                                     <canvas id="accuracyChart"></canvas>
                                 </div>
                             </div>
                              <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 text-center">
-                                <h4 class="font-semibold text-slate-700">Temps de Cycle de Commande (Jours)</h4>
+                                <h4 class="font-semibold text-slate-700">Order Cycle Time (Days)</h4>
                                 <div class="chart-container h-48 sm:h-56">
                                     <canvas id="cycleTimeChart"></canvas>
                                 </div>
@@ -294,11 +276,11 @@
                     </div>
                 </div>
                 <div class="mt-8 p-6 bg-slate-50 rounded-lg border border-slate-200">
-                    <h3 class="font-bold text-lg mb-2 text-slate-700">✨ Assistant de Communication</h3>
-                    <p class="text-slate-600 text-sm mb-4">Rédigez un message clair et professionnel pour annoncer les changements à l'équipe.</p>
-                    <textarea id="comm-plan-input" class="w-full h-24 p-2 mb-4 rounded-lg border border-slate-300 text-sm" placeholder="Ex. : Expliquer les nouveaux rôles et l'amélioration de l'efficacité. Public : Tout le personnel d'entrepôt."></textarea>
+                    <h3 class="font-bold text-lg mb-2 text-slate-700">✨ Communication Assistant</h3>
+                    <p class="text-slate-600 text-sm mb-4">Draft a clear and professional message to announce changes to the team.</p>
+                    <textarea id="comm-plan-input" class="w-full h-24 p-2 mb-4 rounded-lg border border-slate-300 text-sm" placeholder="e.g., Explain the new roles and how it improves efficiency. Target audience: All warehouse staff."></textarea>
                     <button id="generate-comm-plan-btn" class="flex items-center justify-center w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
-                        Rédiger le Plan de Communication ✨
+                        Draft Communication Plan ✨
                         <div id="comm-plan-loading" class="loading-spinner ml-2"></div>
                     </button>
                     <div id="comm-plan-output" class="mt-4 p-4 bg-white rounded-lg border border-slate-200 text-sm whitespace-pre-wrap leading-relaxed"></div>
@@ -312,15 +294,10 @@
             const tabs = document.querySelectorAll('.tab-btn');
             const contentSections = document.querySelectorAll('.content-section');
 
-            // ⚠️ ADRESSE NETLIFY AJOUTÉE (si l'appel proxy direct échoue)
-            const netlifyDomain = 'https://effortless-kulfi-52a95b.netlify.app';
-            // Le PROXY_ENDPOINT tente d'abord le chemin relatif (meilleure pratique)
-            let PROXY_ENDPOINT = '/.netlify/functions/gemini-proxy';
-            
-            // Si le déploiement Netlify n'utilise pas le proxy relatif, on revient au domaine codé en dur.
-            if (window.location.host.includes('github.io') || window.location.host.includes('vercel.app')) {
-                 PROXY_ENDPOINT = netlifyDomain + '/.netlify/functions/gemini-proxy';
-            }
+            // ⚠️ ADRESSE NETLIFY CORRIGÉE ET INSÉRÉE ICI ⚠️
+            // Cette URL est utilisée pour les appels API.
+            const netlifyDomain = 'https://effortless-kulfi-52a95b.netlify.app'; 
+            const PROXY_ENDPOINT = netlifyDomain + '/.netlify/functions/gemini-proxy'; 
             // ----------------------------------------------------
 
             const interviewRoleInput = document.getElementById('interview-role-input');
@@ -377,7 +354,7 @@
                 });
             }
 
-            // --- Chart Initializations (Reste inchangé) ---
+            // --- Chart Initializations ---
             const chartOptions = {
                 responsive: true,
                 maintainAspectRatio: false,
@@ -425,9 +402,9 @@
                 new Chart(workloadCtx, {
                     type: 'bar',
                     data: {
-                        labels: ['Spécialiste Entrant', 'Coordonnateur Expédition', 'Gestionnaire Entrepôt'],
+                        labels: ['Inbound Specialist', 'Dispatch Coordinator', 'Warehouse Manager'],
                         datasets: [{
-                            label: 'Heures Hebdomadaires Estimées',
+                            label: 'Estimated Weekly Hours',
                             data: [38, 40, 35],
                             backgroundColor: ['#60a5fa', '#34d399', '#facc15'],
                             borderColor: ['#3b82f6', '#10b981', '#f59e0b'],
@@ -443,9 +420,9 @@
                 new Chart(accuracyCtx, {
                     type: 'doughnut',
                     data: {
-                        labels: ['Précis', 'Erreur'],
+                        labels: ['Accurate', 'Error'],
                         datasets: [{
-                            label: 'Précision des Stocks',
+                            label: 'Inventory Accuracy',
                             data: [98.5, 1.5],
                             backgroundColor: ['#34d399', '#f87171'],
                             hoverOffset: 4
@@ -475,9 +452,9 @@
                  new Chart(cycleTimeCtx, {
                     type: 'line',
                     data: {
-                        labels: ['T1', 'T2', 'T3', 'T4'],
+                        labels: ['Q1', 'Q2', 'Q3', 'Q4'],
                         datasets: [{
-                            label: 'Temps de Cycle de Commande',
+                            label: 'Order Cycle Time',
                             data: [2.5, 2.2, 1.9, 1.8],
                             fill: false,
                             borderColor: '#3b82f6',
@@ -495,97 +472,65 @@
                          scales: {
                             y: {
                                 beginAtZero: false,
-                                title: { display: true, text: 'Jours' }
+                                title: { display: true, text: 'Days' }
                             }
                          }
                     }
                 });
             }
 
-            // Fonction de conversion Markdown simple vers HTML (Gras, Listes, Paragraphes)
-            const markdownToHtml = (markdown) => {
-                let html = markdown || '';
 
-                // Conversion des listes (plus robuste)
-                html = html.replace(/(\n|^)(\d+\.\s.*)/g, '$1<li>$2</li>');
-                html = html.replace(/((?:<li>.*<\/li>[\n\r]*)+)/g, '<ol>$1</ol>');
-                html = html.replace(/<li>(\d+\.\s)(.*?)<\/li>/g, '<li>$2</li>'); // Retirer les numéros Markdown après la conversion en <li>
-                
-                // Conversion du gras
-                html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                
-                // Conversion des doubles sauts de ligne en paragraphes
-                html = html.replace(/\n\n/g, '</p><p>');
-                
-                // Nettoyage des sauts de ligne simples
-                html = html.replace(/\n/g, '<br>');
-
-                // Encadrer le contenu restant de paragraphes si ce n'est pas déjà dans une liste
-                if (!html.startsWith('<p>') && !html.startsWith('<ol>')) {
-                    html = `<p>${html}</p>`;
-                }
-                
-                // Nettoyage final des balises vides
-                html = html.replace(/<p><\/p>/g, '');
-                html = html.replace(/<br><\/p>/g, '</p>');
-                html = html.replace(/<ol><\/p>/g, '<ol>').replace(/<\/p><ol>/g, '<ol>');
-                
-                return html;
-            };
-
-            // --- UPDATED API CALL FUNCTION (avec gestion de l'URL et du timeout) ---
+            // --- UPDATED API CALL FUNCTION ---
             const callApi = async (userPrompt, outputElement, loadingElement, systemPrompt) => {
                 showLoading(loadingElement);
-                outputElement.innerHTML = 'Génération de contenu en cours... (Veuillez patienter, cela peut prendre jusqu\'à 30 secondes en raison du temps de réponse initial de l\'API)...';
-                
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 secondes de timeout
-                
-                try {
-                    const payload = { userPrompt, systemPrompt };
-                    
-                    const response = await fetch(PROXY_ENDPOINT, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload),
-                        signal: controller.signal // Appliquer le signal de timeout
-                    });
+                outputElement.textContent = 'Generating content...';
+                let retries = 3;
+                while (retries > 0) {
+                    try {
+                        const payload = { userQuery: userPrompt, systemPrompt };
+                        
+                        const response = await fetch(PROXY_ENDPOINT, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
 
-                    clearTimeout(timeoutId);
+                        // S'il y a une erreur HTTP (4xx ou 5xx)
+                        if (!response.ok) {
+                             const errorText = await response.text();
+                             let errorMessage = `Proxy Error: ${response.status} ${response.statusText}`;
 
-                    if (!response.ok) {
-                         const errorText = await response.text();
-                         let errorMessage = `Erreur Proxy: ${response.status} ${response.statusText}`;
-
-                         try {
-                             const errorData = JSON.parse(errorText);
-                             errorMessage = errorData.details || errorData.error || errorMessage;
-                         } catch (e) {
-                             errorMessage += `. Veuillez vérifier vos logs Netlify.`;
-                         }
-                         throw new Error(errorMessage);
+                             try {
+                                 // Tente de lire le JSON si le proxy l'a renvoyé
+                                 const errorData = JSON.parse(errorText);
+                                 errorMessage = errorData.details || errorData.error || errorMessage;
+                             } catch (e) {
+                                 // Sinon, Netlify a peut-être renvoyé une page d'erreur HTML simple
+                                 errorMessage += `. Response content suggests a server error (check Netlify logs for 500 error).`;
+                             }
+                             throw new Error(errorMessage);
+                        }
+                        
+                        const result = await response.json();
+                        const generatedText = result.text;
+                        
+                        if (generatedText) {
+                            outputElement.textContent = generatedText;
+                            break;
+                        } else {
+                             throw new Error('Received empty or malformed text response from proxy.');
+                        }
+                    } catch (error) {
+                        console.error("API Call Error:", error);
+                        retries--;
+                        if (retries === 0) {
+                           outputElement.textContent = `🚨 Failed to generate content after 3 attempts. Error: ${error.message}. Please check: 1. Your GEMINI_API_KEY on Netlify. 2. The Netlify function logs.`;
+                        } else {
+                            await new Promise(res => setTimeout(res, 1000 * (4 - retries)));
+                        }
                     }
-                    
-                    const result = await response.json();
-                    const generatedText = result.text;
-                    
-                    if (generatedText) {
-                        outputElement.innerHTML = markdownToHtml(generatedText);
-                    } else {
-                         throw new Error('Réponse vide ou mal formée reçue du proxy.');
-                    }
-                } catch (error) {
-                    clearTimeout(timeoutId);
-                    if (error.name === 'AbortError') {
-                         outputElement.innerHTML = '🚨 **Échec de la génération (Timeout)** : L\'API a mis plus de 30 secondes à répondre. Veuillez réessayer. Si l\'erreur persiste, votre clé API pourrait être en cause.';
-                    } else {
-                         outputElement.innerHTML = `🚨 **Échec de la génération** : Erreur: ${error.message}. Vérifiez votre clé API ou les logs Netlify.`;
-                    }
-                    console.error("Erreur Appel API:", error);
-
-                } finally {
-                    hideLoading(loadingElement);
                 }
+                hideLoading(loadingElement);
             };
 
             // --- Event Listeners ---
@@ -593,33 +538,33 @@
             generateQuestionsBtn.addEventListener('click', () => {
                 const role = interviewRoleInput.value.trim();
                 if (role) {
-                    const systemPrompt = "Vous êtes un expert en analyse commerciale et en ressources humaines. Votre tâche est de générer des questions d'entrevue pertinentes pour un projet de restructuration. La réponse doit être en français et utiliser le format Markdown pour le gras et les listes.";
-                    const userPrompt = `Générez une liste de questions d'entrevue pour un intervenant ayant le rôle de "${role}". Les questions doivent aider à comprendre leurs responsabilités actuelles, leurs défis et leurs idées. Présentez les questions sous forme de liste numérotée.`;
+                    const systemPrompt = "You are an expert business analyst and human resources consultant. Your task is to generate relevant and insightful interview questions for a warehouse and inventory management restructuring project. Use French language for the output.";
+                    const userPrompt = `Generate a list of interview questions for a stakeholder with the role of "${role}". The questions should help understand their current responsibilities, challenges, and ideas for a new organizational structure. Present the questions as a numbered list.`;
                     callApi(userPrompt, questionsOutput, questionsLoading, systemPrompt);
                 } else {
-                    questionsOutput.innerHTML = 'Veuillez entrer un rôle (ex. : Gestionnaire des stocks) pour générer des questions.';
+                    questionsOutput.textContent = 'Please enter a role (e.g., Inventory Manager) to generate questions.';
                 }
             });
 
             generateRoleDescBtn.addEventListener('click', () => {
                 const description = roleDescInput.value.trim();
                 if (description) {
-                    const systemPrompt = "Vous êtes un expert en conception organisationnelle et RH. Votre tâche est de rédiger une description de poste détaillée et professionnelle pour un poste de gestion d'entrepôt. La réponse doit être en français et utiliser le format Markdown pour le gras.";
-                    const userPrompt = `En vous basant sur cette entrée : "${description}", rédigez une description de rôle complète incluant un résumé, les responsabilités clés, les qualifications requises et la structure de reporting.`;
+                    const systemPrompt = "You are an expert human resources specialist. Your task is to write a detailed job description based on the input provided. Use French language for the output.";
+                    const userPrompt = `Based on this input: "${description}", write a complete role description including key responsibilities, qualifications, and reporting structure.`;
                     callApi(userPrompt, roleDescOutput, roleDescLoading, systemPrompt);
                 } else {
-                    roleDescOutput.innerHTML = 'Veuillez entrer un titre de rôle et quelques responsabilités pour générer une description.';
+                    roleDescOutput.textContent = 'Please enter a role title and a few responsibilities to generate a description.';
                 }
             });
 
             generateCommPlanBtn.addEventListener('click', () => {
                 const plan = commPlanInput.value.trim();
                 if (plan) {
-                    const systemPrompt = "Vous êtes un gestionnaire de communication d'entreprise. Rédigez une note de service interne professionnelle, claire et rassurante concernant les changements organisationnels. La réponse doit être en français et utiliser le format Markdown pour le gras.";
-                    const userPrompt = `Rédigez une note de communication basée sur ce plan : "${plan}". Le ton doit être positif, axé sur l'avenir et les avantages pour le personnel.`;
+                    const systemPrompt = "You are a corporate communications manager. Draft a professional, clear, and reassuring internal communication memo regarding organizational changes. Use French language for the output.";
+                    const userPrompt = `Draft a communication memo based on this plan: "${plan}". The tone should be positive, focusing on the future and the benefits for the staff.`;
                     callApi(userPrompt, commPlanOutput, commPlanLoading, systemPrompt);
                 } else {
-                    commPlanOutput.innerHTML = 'Veuillez entrer les éléments clés de votre plan de communication.';
+                    commPlanOutput.textContent = 'Please enter key elements of your communication plan.';
                 }
             });
         });
