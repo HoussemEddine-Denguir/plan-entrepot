@@ -6,6 +6,8 @@
     <title>Interactive Warehouse Restructuring Plan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Ajout de la bibliothèque marked.js pour convertir markdown en HTML -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -35,12 +37,12 @@
             margin-right: auto;
             height: 300px;
             max-height: 350px;
-            padding-bottom: 50%; /* Maintenir le ratio pour responsive */
+            padding-bottom: 50%;
         }
         @media (min-width: 768px) {
             .chart-container {
                 height: 320px;
-                padding-bottom: 0; /* Désactiver le padding sur desktop si hauteur fixe */
+                padding-bottom: 0;
             }
         }
         .technique-card {
@@ -76,6 +78,62 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+        
+        /* Styles pour le contenu markdown rendu */
+        .markdown-content {
+            line-height: 1.6;
+        }
+        .markdown-content h1, .markdown-content h2, .markdown-content h3, .markdown-content h4, .markdown-content h5, .markdown-content h6 {
+            font-weight: bold;
+            margin-top: 1em;
+            margin-bottom: 0.5em;
+        }
+        .markdown-content h1 { font-size: 1.5em; }
+        .markdown-content h2 { font-size: 1.3em; }
+        .markdown-content h3 { font-size: 1.1em; }
+        .markdown-content strong, .markdown-content b {
+            font-weight: bold;
+        }
+        .markdown-content em, .markdown-content i {
+            font-style: italic;
+        }
+        .markdown-content ul, .markdown-content ol {
+            margin-left: 1.5em;
+            margin-bottom: 1em;
+        }
+        .markdown-content ul {
+            list-style-type: disc;
+        }
+        .markdown-content ol {
+            list-style-type: decimal;
+        }
+        .markdown-content li {
+            margin-bottom: 0.5em;
+        }
+        .markdown-content p {
+            margin-bottom: 1em;
+        }
+        .markdown-content code {
+            background-color: #f1f5f9;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        .markdown-content pre {
+            background-color: #f1f5f9;
+            padding: 1em;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 1em;
+        }
+        .markdown-content blockquote {
+            border-left: 4px solid #e2e8f0;
+            padding-left: 1em;
+            margin-left: 0;
+            font-style: italic;
+            color: #64748b;
         }
     </style>
 </head>
@@ -153,7 +211,7 @@
                         Generate Questions ✨
                         <div id="questions-loading" class="loading-spinner ml-2"></div>
                     </button>
-                    <div id="questions-output" class="mt-4 p-4 bg-white rounded-lg border border-slate-200 text-sm whitespace-pre-wrap leading-relaxed"></div>
+                    <div id="questions-output" class="markdown-content mt-4 p-4 bg-white rounded-lg border border-slate-200 text-sm"></div>
                 </div>
             </section>
 
@@ -235,7 +293,7 @@
                         Generate Role Description ✨
                         <div id="role-desc-loading" class="loading-spinner ml-2"></div>
                     </button>
-                    <div id="role-desc-output" class="mt-4 p-4 bg-white rounded-lg border border-slate-200 text-sm whitespace-pre-wrap leading-relaxed"></div>
+                    <div id="role-desc-output" class="markdown-content mt-4 p-4 bg-white rounded-lg border border-slate-200 text-sm"></div>
                 </div>
             </section>
 
@@ -283,7 +341,7 @@
                         Draft Communication Plan ✨
                         <div id="comm-plan-loading" class="loading-spinner ml-2"></div>
                     </button>
-                    <div id="comm-plan-output" class="mt-4 p-4 bg-white rounded-lg border border-slate-200 text-sm whitespace-pre-wrap leading-relaxed"></div>
+                    <div id="comm-plan-output" class="markdown-content mt-4 p-4 bg-white rounded-lg border border-slate-200 text-sm"></div>
                 </div>
             </section>
         </main>
@@ -295,10 +353,8 @@
             const contentSections = document.querySelectorAll('.content-section');
 
             // ⚠️ ADRESSE NETLIFY CORRIGÉE ET INSÉRÉE ICI ⚠️
-            // Cette URL est utilisée pour les appels API.
             const netlifyDomain = 'https://effortless-kulfi-52a95b.netlify.app'; 
             const PROXY_ENDPOINT = netlifyDomain + '/.netlify/functions/gemini-proxy'; 
-            // ----------------------------------------------------
 
             const interviewRoleInput = document.getElementById('interview-role-input');
             const generateQuestionsBtn = document.getElementById('generate-questions-btn');
@@ -317,6 +373,19 @@
 
             const showLoading = (loader) => loader.style.display = 'block';
             const hideLoading = (loader) => loader.style.display = 'none';
+
+            // Fonction pour convertir le markdown en HTML
+            const renderMarkdown = (markdownText, outputElement) => {
+                try {
+                    // Utiliser marked.js pour convertir le markdown en HTML
+                    const htmlContent = marked.parse(markdownText);
+                    outputElement.innerHTML = htmlContent;
+                } catch (error) {
+                    console.error('Erreur lors de la conversion markdown:', error);
+                    // En cas d'erreur, afficher le texte brut
+                    outputElement.textContent = markdownText;
+                }
+            };
 
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
@@ -354,7 +423,7 @@
                 });
             }
 
-            // --- Chart Initializations ---
+            // Chart Initializations
             const chartOptions = {
                 responsive: true,
                 maintainAspectRatio: false,
@@ -479,11 +548,10 @@
                 });
             }
 
-
-            // --- UPDATED API CALL FUNCTION ---
+            // FONCTION API MISE À JOUR AVEC SUPPORT MARKDOWN
             const callApi = async (userPrompt, outputElement, loadingElement, systemPrompt) => {
                 showLoading(loadingElement);
-                outputElement.textContent = 'Generating content...';
+                outputElement.textContent = 'Génération du contenu...';
                 let retries = 3;
                 while (retries > 0) {
                     try {
@@ -495,17 +563,14 @@
                             body: JSON.stringify(payload)
                         });
 
-                        // S'il y a une erreur HTTP (4xx ou 5xx)
                         if (!response.ok) {
                              const errorText = await response.text();
                              let errorMessage = `Proxy Error: ${response.status} ${response.statusText}`;
 
                              try {
-                                 // Tente de lire le JSON si le proxy l'a renvoyé
                                  const errorData = JSON.parse(errorText);
                                  errorMessage = errorData.details || errorData.error || errorMessage;
                              } catch (e) {
-                                 // Sinon, Netlify a peut-être renvoyé une page d'erreur HTML simple
                                  errorMessage += `. Response content suggests a server error (check Netlify logs for 500 error).`;
                              }
                              throw new Error(errorMessage);
@@ -515,7 +580,8 @@
                         const generatedText = result.text;
                         
                         if (generatedText) {
-                            outputElement.textContent = generatedText;
+                            // CONVERSION MARKDOWN VERS HTML
+                            renderMarkdown(generatedText, outputElement);
                             break;
                         } else {
                              throw new Error('Received empty or malformed text response from proxy.');
@@ -524,7 +590,7 @@
                         console.error("API Call Error:", error);
                         retries--;
                         if (retries === 0) {
-                           outputElement.textContent = `🚨 Failed to generate content after 3 attempts. Error: ${error.message}. Please check: 1. Your GEMINI_API_KEY on Netlify. 2. The Netlify function logs.`;
+                           outputElement.innerHTML = `<div class="text-red-600">🚨 Échec de la génération de contenu après 3 tentatives. Erreur: ${error.message}. Veuillez vérifier : 1. Votre GEMINI_API_KEY sur Netlify. 2. Les logs de la fonction Netlify.</div>`;
                         } else {
                             await new Promise(res => setTimeout(res, 1000 * (4 - retries)));
                         }
@@ -533,38 +599,38 @@
                 hideLoading(loadingElement);
             };
 
-            // --- Event Listeners ---
+            // Event Listeners
 
             generateQuestionsBtn.addEventListener('click', () => {
                 const role = interviewRoleInput.value.trim();
                 if (role) {
-                    const systemPrompt = "You are an expert business analyst and human resources consultant. Your task is to generate relevant and insightful interview questions for a warehouse and inventory management restructuring project. Use French language for the output.";
-                    const userPrompt = `Generate a list of interview questions for a stakeholder with the role of "${role}". The questions should help understand their current responsibilities, challenges, and ideas for a new organizational structure. Present the questions as a numbered list.`;
+                    const systemPrompt = "You are an expert business analyst and human resources consultant. Your task is to generate relevant and insightful interview questions for a warehouse and inventory management restructuring project. Use French language for the output. Format your response using markdown with proper headings, bold text for emphasis, and numbered lists.";
+                    const userPrompt = `Generate a list of interview questions for a stakeholder with the role of "${role}". The questions should help understand their current responsibilities, challenges, and ideas for a new organizational structure. Present the questions as a numbered list with brief explanations where helpful.`;
                     callApi(userPrompt, questionsOutput, questionsLoading, systemPrompt);
                 } else {
-                    questionsOutput.textContent = 'Please enter a role (e.g., Inventory Manager) to generate questions.';
+                    questionsOutput.innerHTML = '<div class="text-amber-600">⚠️ Veuillez saisir un rôle (ex: Responsable des stocks) pour générer des questions.</div>';
                 }
             });
 
             generateRoleDescBtn.addEventListener('click', () => {
                 const description = roleDescInput.value.trim();
                 if (description) {
-                    const systemPrompt = "You are an expert human resources specialist. Your task is to write a detailed job description based on the input provided. Use French language for the output.";
-                    const userPrompt = `Based on this input: "${description}", write a complete role description including key responsibilities, qualifications, and reporting structure.`;
+                    const systemPrompt = "You are an expert human resources specialist. Your task is to write a detailed job description based on the input provided. Use French language for the output. Format your response using markdown with clear headings, bold text for key responsibilities, and bullet points for lists.";
+                    const userPrompt = `Based on this input: "${description}", write a complete role description including key responsibilities, qualifications, and reporting structure. Use proper markdown formatting with headings and lists.`;
                     callApi(userPrompt, roleDescOutput, roleDescLoading, systemPrompt);
                 } else {
-                    roleDescOutput.textContent = 'Please enter a role title and a few responsibilities to generate a description.';
+                    roleDescOutput.innerHTML = '<div class="text-amber-600">⚠️ Veuillez saisir un titre de poste et quelques responsabilités pour générer une description.</div>';
                 }
             });
 
             generateCommPlanBtn.addEventListener('click', () => {
                 const plan = commPlanInput.value.trim();
                 if (plan) {
-                    const systemPrompt = "You are a corporate communications manager. Draft a professional, clear, and reassuring internal communication memo regarding organizational changes. Use French language for the output.";
-                    const userPrompt = `Draft a communication memo based on this plan: "${plan}". The tone should be positive, focusing on the future and the benefits for the staff.`;
+                    const systemPrompt = "You are a corporate communications manager. Draft a professional, clear, and reassuring internal communication memo regarding organizational changes. Use French language for the output. Format your response using markdown with proper structure, headings, and emphasis where appropriate.";
+                    const userPrompt = `Draft a communication memo based on this plan: "${plan}". The tone should be positive, focusing on the future and the benefits for the staff. Structure it as a professional memo with clear sections.`;
                     callApi(userPrompt, commPlanOutput, commPlanLoading, systemPrompt);
                 } else {
-                    commPlanOutput.textContent = 'Please enter key elements of your communication plan.';
+                    commPlanOutput.innerHTML = '<div class="text-amber-600">⚠️ Veuillez saisir les éléments clés de votre plan de communication.</div>';
                 }
             });
         });
